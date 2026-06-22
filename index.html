@@ -543,11 +543,40 @@ function toggleSmallCatSelect(bigCat, smallCat, prefix) {
     if (bigCat !== '自定义' && HIERARCHY[bigCat] && HIERARCHY[bigCat][smallCat]) {
       if (!appData.wishes[smallCat]) appData.wishes[smallCat] = [...HIERARCHY[bigCat][smallCat]];
     }
-    // For custom cats, wishes already exist
   } else {
     delete appData.wishes[smallCat];
   }
-  refreshCatList(prefix);
+  // If bigCat has only 1 small cat, auto-collapse after selecting
+  const smallCount = (bigCat !== '自定义' && HIERARCHY[bigCat]) ? Object.keys(HIERARCHY[bigCat]).length : 1;
+  if (smallCount === 1) {
+    const obigCat = event.target.closest('.obig-cat');
+    if (obigCat) {
+      // Update small cat checkbox
+      const cb = event.target.closest('.cb');
+      if (cb) cb.className = 'cb' + (!isSel ? ' checked' : '');
+      // Update big cat header checkbox
+      const headCb = obigCat.querySelector('.obig-head .cb');
+      if (headCb) headCb.className = 'cb' + (!isSel ? ' checked' : '');
+      // Auto-collapse
+      const body = obigCat.querySelector('.obig-body');
+      const arrow = obigCat.querySelector('.obig-arrow');
+      if (body) body.classList.remove('open');
+      if (arrow) arrow.classList.remove('open');
+    }
+    saveData();
+    updateSelectAllByPrefix(prefix);
+    updateInfoByPrefix(prefix);
+  } else {
+    refreshCatList(prefix);
+  }
+}
+function updateSelectAllByPrefix(prefix) {
+  if (prefix === 'ob') updateObSelectAll();
+  else if (prefix === 'rs') updateRsSelectAll();
+}
+function updateInfoByPrefix(prefix) {
+  if (prefix === 'ob') updateObInfo();
+  else if (prefix === 'rs') updateRsInfo();
 }
 function selectAllCats(prefix) {
   for (let b in HIERARCHY) for (let s in HIERARCHY[b]) {
