@@ -16,12 +16,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .page{display:none;min-height:100vh;padding-bottom:72px}
 .page.active{display:block}
 
-/* === Top Bar === */
 .topbar{position:sticky;top:0;z-index:100;background:rgba(255,248,240,.92);backdrop-filter:blur(12px);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .topbar h1{font-size:17px;font-weight:700}
 .topbar-back{background:none;border:none;font-size:20px;cursor:pointer;padding:2px 8px 2px 0;color:var(--text)}
 
-/* === Toast === */
 .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:rgba(45,52,54,.9);color:#fff;padding:8px 18px;border-radius:18px;font-size:12px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
 
@@ -36,8 +34,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .onboard-btn:active{transform:scale(.97);opacity:.9}
 .onboard-btn:disabled{opacity:.4;pointer-events:none}
 
-/* Step 2: Select wishes */
-.onboard-step2{min-height:100vh;padding-bottom:80px}
 .step2-header{position:sticky;top:0;z-index:100;background:rgba(255,248,240,.95);backdrop-filter:blur(12px);padding:14px 16px;border-bottom:1px solid var(--border)}
 .step2-title{font-size:16px;font-weight:700;margin-bottom:4px}
 .step2-sub{font-size:12px;color:var(--text2)}
@@ -46,7 +42,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .step2-btns{display:flex;gap:14px}
 .sel-btn2{font-size:12px;color:var(--primary);background:none;border:none;cursor:pointer}
 
-/* Big/Small Category cards in onboard */
 .obig-cat{margin:8px 16px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
 .obig-head{display:flex;align-items:center;padding:12px 14px;gap:10px;cursor:pointer}
 .obig-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
@@ -60,19 +55,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .osmall-name{font-size:13px;flex:1}
 .osmall-count{font-size:11px;color:var(--text2)}
 
-/* Custom wish add in onboard */
 .oadd-row{display:flex;gap:6px;padding:8px 14px 12px}
 .oadd-input{flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;outline:none}
 .oadd-input:focus{border-color:var(--primary)}
 .oadd-btn{padding:8px 14px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
 
-/* Step2 fixed bottom */
 .step2-bottom{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:rgba(255,248,240,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);z-index:150;display:flex;gap:10px;align-items:center}
 .step2-info{font-size:12px;color:var(--text2);flex:1}
 .step2-next{padding:12px 28px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--primary),#FF8E8E);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
 .step2-next:disabled{opacity:.4;pointer-events:none}
 
-/* ========== HOME PAGE ========== */
+/* ========== HOME ========== */
 .home-stats{display:flex;gap:0;margin:12px 16px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
 .home-stat{flex:1;text-align:center;padding:16px 8px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
 .home-stat:active{background:var(--bg)}
@@ -80,13 +73,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .home-stat .label{font-size:11px;color:var(--text2);margin-top:2px}
 .home-stat.green .num{color:var(--green)}
 
-/* Filter bar */
 .filter-bar{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .filter-bar::-webkit-scrollbar{display:none}
 .filter-chip{white-space:nowrap;padding:6px 14px;border-radius:18px;font-size:12px;font-weight:500;background:var(--card);color:var(--text2);border:1.5px solid var(--border);cursor:pointer;flex-shrink:0;transition:all .15s}
 .filter-chip.active{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
+.filter-chip.disabled{cursor:default;opacity:.7}
 
-/* Waterfall / Masonry cards */
 .wish-masonry{column-count:2;column-gap:10px;padding:0 16px 80px}
 .wish-card{break-inside:avoid;margin-bottom:10px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s}
 .wish-card:active{box-shadow:0 1px 6px rgba(0,0,0,.1)}
@@ -102,26 +94,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .wc-cb.checked::after{content:'✓';color:#fff;font-size:10px;font-weight:700}
 .wc-text{font-size:12px;line-height:1.4;flex:1;min-width:0}
 .wc-text.done{text-decoration:line-through;color:var(--text3)}
-.wc-edit{background:none;border:none;font-size:10px;color:var(--text3);cursor:pointer;padding:2px 4px;flex-shrink:0}
 .wc-footer{padding:6px 14px 10px;text-align:center}
 .wc-toggle{font-size:11px;color:var(--primary);background:none;border:none;cursor:pointer;font-weight:500}
 
-/* Expanded card (full-width overlay) */
-.wish-card.expanded{position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;margin:0;border-radius:0;column-span:all;overflow-y:auto;padding-bottom:80px}
-.wish-card.expanded .wc-header{position:sticky;top:0;background:var(--card);z-index:1;padding:14px;border-bottom:1px solid var(--border)}
+.wish-card.expanded{position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;margin:0;border-radius:0;overflow-y:auto;padding-bottom:80px}
+.wish-card.expanded .wc-header{position:sticky;top:0;background:var(--card);z-index:1;padding:14px;border-bottom:1px solid var(--border);cursor:pointer}
 .wish-card.expanded .wc-body{padding:4px 14px 6px}
 .wish-card.expanded .wc-item{padding:10px 4px}
 .wish-card.expanded .wc-text{font-size:14px}
 .wish-card.expanded .wc-cb{width:22px;height:22px}
 .wish-card.expanded .wc-cb.checked::after{font-size:12px}
 
-/* Home bottom add */
-.home-add-bar{display:flex;gap:8px;padding:10px 16px;background:var(--card);border-top:1px solid var(--border);position:fixed;bottom:56px;left:0;right:0;z-index:140;padding-bottom:max(10px,env(safe-area-inset-bottom))}
-.home-add-input{flex:1;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;outline:none}
-.home-add-input:focus{border-color:var(--primary)}
-.home-add-btn{padding:10px 16px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cb{width:20px;height:20px;border-radius:50%;border:2px solid var(--text3);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+.cb.checked{background:var(--primary);border-color:var(--primary)}
+.cb.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700}
+.cb.partial{border-color:var(--primary)}
+.cb.partial::after{content:'';width:10px;height:2px;background:var(--primary);border-radius:1px}
 
-/* ========== ADD PAGE ========== */
+/* ADD PAGE */
 .add-section{padding:16px}
 .add-section h3{font-size:14px;font-weight:600;margin-bottom:12px}
 .add-input{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;outline:none;margin-bottom:12px}
@@ -138,7 +128,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .recent-cat{font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;white-space:nowrap}
 .recent-text{font-size:13px;flex:1}
 
-/* ========== SETTINGS PAGE ========== */
+/* SETTINGS */
 .settings-header{padding:24px 16px;text-align:center}
 .settings-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#FF8E8E);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:600;margin-bottom:10px}
 .settings-name{font-size:20px;font-weight:700}
@@ -149,25 +139,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .settings-text{flex:1;font-size:14px}
 .settings-arrow{color:var(--text3);font-size:12px}
 
-/* ========== SHARE PAGE ========== */
+/* SHARE */
 .share-preview{margin:16px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);text-align:center}
-.share-img{width:100%;min-height:200px;background:linear-gradient(135deg,var(--primary),#FF8E8E);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:32px 20px}
-.share-img .name{font-size:24px;font-weight:700;margin-bottom:6px}
-.share-img .stats{font-size:14px;opacity:.85;margin-bottom:12px}
-.share-img .slogan{font-size:11px;opacity:.7}
+.share-canvas{width:100%;background:linear-gradient(135deg,#FF6B6B,#FF8E8E);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:32px 20px;position:relative}
+.share-canvas .s-name{font-size:22px;font-weight:700;margin-bottom:6px}
+.share-canvas .s-stats{font-size:14px;opacity:.85;margin-bottom:16px}
+.share-canvas .s-slogan{font-size:12px;opacity:.8;margin-bottom:16px}
+.share-canvas .s-qr{background:#fff;padding:8px;border-radius:8px;display:inline-block}
+.share-canvas .s-qr canvas{display:block}
 .share-actions{padding:16px;display:flex;gap:10px}
 .share-btn{flex:1;padding:12px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
 .share-btn.primary{background:linear-gradient(135deg,var(--primary),#FF8E8E);color:#fff}
-.share-btn.secondary{background:var(--bg);color:var(--text)}
 
-/* ========== Bottom Navigation ========== */
+/* Bottom Nav */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(255,248,240,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;padding-bottom:max(4px,env(safe-area-inset-bottom))}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .15s;color:var(--text3)}
 .nav-item.active{color:var(--primary)}
 .nav-icon{font-size:20px;line-height:1}
 .nav-label{font-size:10px;margin-top:3px;font-weight:500}
 
-/* ========== Modal ========== */
+/* Modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal{background:var(--card);border-radius:18px;padding:24px 20px;width:min(360px,90vw);max-height:80vh;overflow-y:auto}
@@ -177,23 +168,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .modal input:focus{border-color:var(--primary)}
 .modal-btn{width:100%;padding:13px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
 
-/* Checkbox helper */
-.cb{width:20px;height:20px;border-radius:50%;border:2px solid var(--text3);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
-.cb.checked{background:var(--primary);border-color:var(--primary)}
-.cb.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700}
-.cb.partial{border-color:var(--primary)}
-.cb.partial::after{content:'';width:10px;height:2px;background:var(--primary);border-radius:1px}
-
-/* Re-select page (reuse onboard styles) */
 .reselect-page{display:none;min-height:100vh;padding-bottom:80px}
 .reselect-page.active{display:block}
 
-/* Empty state */
 .empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
 .empty-state .emoji{font-size:40px;margin-bottom:10px}
 .empty-state .msg{font-size:14px}
 
-/* Animations */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{animation:fadeIn .25s ease}
 </style>
@@ -202,7 +183,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 
 <div class="toast" id="toast"></div>
 
-<!-- ====== ONBOARDING STEP 1: NAME ====== -->
+<!-- ONBOARD STEP 1 -->
 <div class="page" id="pageOnboard1">
   <div class="onboard">
     <div class="onboard-logo">🌟</div>
@@ -213,7 +194,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   </div>
 </div>
 
-<!-- ====== ONBOARDING STEP 2: SELECT WISHES ====== -->
+<!-- ONBOARD STEP 2 -->
 <div class="page" id="pageOnboard2">
   <div class="step2-header">
     <div class="step2-title" id="step2Title">挑选你感兴趣的心愿</div>
@@ -230,7 +211,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
     </div>
   </div>
   <div id="obCategoryList"></div>
-  <!-- Custom wish add in onboard -->
   <div style="padding:12px 16px">
     <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text2)">✨ 自定义心愿</div>
     <div class="oadd-row" style="padding:0">
@@ -244,21 +224,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   </div>
 </div>
 
-<!-- ====== HOME PAGE ====== -->
+<!-- HOME -->
 <div class="page" id="pageHome">
-  <div class="topbar">
-    <h1 id="homeTitle">🌟 心愿清单</h1>
-  </div>
+  <div class="topbar"><h1 id="homeTitle">🌟 心愿清单</h1></div>
   <div class="home-stats" id="homeStats"></div>
   <div class="filter-bar" id="filterBar"></div>
   <div class="wish-masonry" id="wishMasonry"></div>
-  <div class="home-add-bar" id="homeAddBar">
-    <input class="home-add-input" id="homeAddInput" placeholder="添加心愿..." maxlength="100">
-    <button class="home-add-btn" onclick="addWishFromHome()">添加</button>
-  </div>
 </div>
 
-<!-- ====== ADD PAGE ====== -->
+<!-- ADD -->
 <div class="page" id="pageAdd">
   <div class="topbar"><h1>✨ 添加心愿</h1></div>
   <div class="add-section">
@@ -271,7 +245,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   </div>
 </div>
 
-<!-- ====== SETTINGS PAGE ====== -->
+<!-- SETTINGS -->
 <div class="page" id="pageSettings">
   <div class="topbar"><h1>⚙️ 设置</h1></div>
   <div class="settings-header">
@@ -281,13 +255,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   <div class="settings-menu" id="settingsMenu"></div>
 </div>
 
-<!-- ====== SHARE PAGE ====== -->
+<!-- SHARE -->
 <div class="page" id="pageShare">
   <div class="topbar"><h1>📤 分享</h1></div>
   <div class="share-preview" id="sharePreview"></div>
 </div>
 
-<!-- ====== RE-SELECT PAGE (modal-like full page) ====== -->
+<!-- RE-SELECT -->
 <div class="reselect-page" id="pageReselect">
   <div class="step2-header">
     <div style="display:flex;align-items:center;gap:8px">
@@ -322,27 +296,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   </div>
 </div>
 
-<!-- ====== Bottom Navigation ====== -->
+<!-- Bottom Nav -->
 <div class="bottom-nav" id="bottomNav" style="display:none">
   <div class="nav-item active" onclick="switchPage('pageHome')" data-page="pageHome">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-label">首页</div>
+    <div class="nav-icon">🏠</div><div class="nav-label">首页</div>
   </div>
   <div class="nav-item" onclick="switchPage('pageAdd')" data-page="pageAdd">
-    <div class="nav-icon">➕</div>
-    <div class="nav-label">添加</div>
+    <div class="nav-icon">➕</div><div class="nav-label">添加</div>
   </div>
   <div class="nav-item" onclick="switchPage('pageSettings')" data-page="pageSettings">
-    <div class="nav-icon">⚙️</div>
-    <div class="nav-label">设置</div>
+    <div class="nav-icon">⚙️</div><div class="nav-label">设置</div>
   </div>
   <div class="nav-item" onclick="switchPage('pageShare')" data-page="pageShare">
-    <div class="nav-icon">📤</div>
-    <div class="nav-label">分享</div>
+    <div class="nav-icon">📤</div><div class="nav-label">分享</div>
   </div>
 </div>
 
-<!-- ====== Edit Wish Modal ====== -->
+<!-- Edit Modal -->
 <div class="modal-overlay" id="editModal">
   <div class="modal">
     <button class="modal-close" onclick="closeEditModal()">✕</button>
@@ -352,7 +322,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   </div>
 </div>
 
-<!-- ====== Name Change Modal ====== -->
+<!-- Name Modal -->
 <div class="modal-overlay" id="nameModal">
   <div class="modal">
     <button class="modal-close" onclick="closeNameModal()">✕</button>
@@ -362,115 +332,80 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   </div>
 </div>
 
+<!-- qrcode.js for share -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
 <script>
 const HIERARCHY = {"城市旅行": {"杭州": ["去西湖断桥看一次雪景", "去杭州在灵隐寺撞一次新年钟", "去杭州乘摇橹船夜游西湖看三潭印月", "去龙井村采一次春茶", "去杭州在西溪湿地坐摇橹船赏芦花", "去杭州到河坊街吃一次定胜糕和葱包桧", "去杭州在钱塘江边观一次大潮", "去南宋御街走一遍千年古道", "去杭州到北山街看一次梧桐落叶", "去杭州在法喜寺求一次御守", "去良渚古城遗址看五千年文明", "去杭州到楼外楼吃一次正宗西湖醋鱼", "去杭州在湘湖边骑行一圈", "去中国丝绸博物馆看一场时装秀", "去杭州在满觉陇赏一次桂花雨", "去杭州到小河直街喝一杯手冲咖啡", "去杭州在六和塔上远眺钱塘江大桥"], "北京": ["去北京在天安门广场看一次升旗仪式", "去北京登故宫角楼看一次日落", "去北京爬一次慕田峪长城看红叶", "去北京在天坛祈年殿前许一个愿", "去什刹海滑一次冰车", "去北京在南锣鼓巷吃一次糖葫芦", "去北京到国家大剧院看一场演出", "去北京在颐和园昆明湖上划一次船", "去798艺术区看一次当代艺术展", "去北京到雍和宫烧一次香", "去北京在胡同里坐一次三轮车听老北京故事", "去景山公园俯瞰故宫全景", "去北京到牛街吃一次正宗涮羊肉", "去北京在北大未名湖畔走一圈", "去八达岭夜长城体验灯光秀", "去北京到琉璃厂淘一本古籍", "去北京在国家图书馆泡一整天"], "上海": ["去上海在外滩看一次跨年灯光秀", "去上海在陆家嘴天桥拍一次三件套", "去武康路喝一杯咖啡看梧桐落叶", "去上海到迪士尼看一次烟花秀", "去上海在上海大剧院看一场音乐剧", "去城隍庙吃一次南翔小笼包", "去上海在田子坊逛一次文艺小店", "去上海到南京路步行街走一趟霓虹夜", "去上海博物馆东馆看一次大展", "去上海在黄浦江游船上拍一次夜上海", "去上海到朱家角古镇坐一次手摇船", "去安福路看一次话剧", "去上海在豫园九曲桥上走一走", "去上海到静安寺商圈逛一圈", "去上海天文馆看一次星空", "去上海在思南公馆参加一次读书会", "去上海到广富林文化遗址看水下博物馆"], "成都": ["去大熊猫繁育基地看一次幼仔喂奶", "去成都在宽窄巷子喝一碗盖碗茶", "去成都到人民公园鹤鸣茶社掏一次耳朵", "去春熙路看一次IFS爬墙熊猫", "去成都在九眼桥酒吧街听一次驻唱", "去成都到锦里吃一次三大炮", "去武侯祠看一次三国文化展", "去成都在杜甫草堂读一首茅屋为秋风所破歌", "去成都到青城山前山做一次深呼吸", "去都江堰看一次放水节", "去成都在太古里逛一次方所书店", "去成都到川剧院看一场变脸表演", "去文殊院吃一次宫廷糕点", "去成都在建设路小吃街吃遍一圈", "去成都到东郊记忆拍一组工业风照片", "去龙泉山城市森林公园看一次日出", "去成都在天府绿道骑行十公里"], "厦门": ["去厦门在鼓浪屿听一次钢琴演奏", "去南普陀寺爬五老峰看一次海景", "去厦门在环岛路上骑行看日落", "去厦门到沙坡尾逛一次文艺渔港", "去曾厝垵吃一次海蛎煎", "去厦门在中山路步行街吃一次沙茶面", "去厦门到厦门大学芙蓉隧道涂鸦墙打卡", "去集美学村看一次嘉庚建筑", "去厦门在八市吃一次土笋冻和花生汤", "去厦门到胡里山炮台看一次克虏伯大炮", "去植物园看一次雨林世界雾气", "去厦门在白城沙滩看一次海上日出", "去厦门到顶澳仔猫街撸一次猫", "去铁路文化公园走一段老铁轨", "去厦门在海沧大桥下看一次夜景", "去筼筜湖边喝一次咖啡", "去厦门在日月谷温泉泡一次汤"], "大理": ["去大理在洱海边骑行一圈看苍山倒影", "去大理古城洋人街喝一杯云南小粒咖啡", "去大理到双廊古镇看一次洱海日落", "去喜洲古镇吃一次破酥粑粑", "去大理在苍山乘洗马潭索道看一次云海", "去大理到崇圣寺三塔拍一次倒影", "去寂照庵吃一次斋饭", "去大理在才村码头看一次洱海日出", "去大理到周城体验一次白族扎染", "去沙溪古镇走一次茶马古道", "去大理在大理古城人民路听一次街头民谣", "去大理到小普陀看一次海鸥飞舞", "去龙龛码头划一次皮划艇", "去大理在苍山脚下的茶园采一次茶", "去大理到洱源牛街泡一次温泉", "去诺邓古村看一次千年盐井", "去大理在海舌公园拍一次夫妻树"], "西安": ["去兵马俑一号坑感受千军万马", "去西安在城墙上骑行一圈看城市全景", "去西安到大雁塔北广场看一次喷泉表演", "去回民街吃一次羊肉泡馍", "去西安在华清池看一次长恨歌实景演出", "去西安到陕西历史博物馆看一次何家村窖藏", "去大唐不夜城穿一次汉服拍照", "去西安在钟楼看一次夜景灯光", "去西安到小雁塔敲一次雁塔晨钟", "去碑林博物馆拓一次字帖", "去西安在永兴坊喝一次摔碗酒", "去西安到华山上走一次长空栈道", "去秦始皇陵看一次铜车马", "去西安在大唐芙蓉园看一次水幕电影", "去西安到德福巷喝一次咖啡", "去大兴善寺求一次平安", "去西安在赛格国际看一次室内扶梯亚洲第一长"], "重庆": ["去洪崖洞看一次千与千寻般的夜景", "去重庆在长江索道上飞渡一次山城", "去重庆到李子坝看一次轻轨穿楼", "去解放碑吃一次正宗重庆火锅", "去重庆在磁器口古镇喝一次盖碗茶", "去重庆到南山一棵树看一次山城夜景", "去川美涂鸦街拍一组照片", "去重庆在鹅岭二厂逛一次文创市集", "去重庆到交通茶馆坐一个下午", "去武隆天坑看一次天生三桥", "去重庆在千厮门大桥上拍一次洪崖洞全景", "去重庆到山城步道走一次老重庆巷子", "去弹子石老街看一次两江交汇", "去重庆在皇冠大扶梯上体验一次亚洲最陡", "去重庆到十八梯看一次老城新貌", "去大足石刻看一次千手观音", "去重庆在南滨路夜跑一次"], "苏州": ["去苏州在拙政园看一次荷花", "去平江路坐一次摇橹船听评弹", "去苏州到苏州博物馆看一次贝聿铭的光影", "去苏州在山塘街吃一次蟹壳黄", "去虎丘塔看一次中国斜塔", "去苏州到金鸡湖边看一次音乐喷泉", "去苏州在网师园夜游看一次昆曲表演", "去同里古镇退思园走一圈", "去苏州到观前街吃一次松鼠桂鱼", "去苏州在甪直古镇看一次水乡妇女服饰", "去诚品书店逛一个下午", "去苏州到寒山寺听一次夜半钟声", "去苏州在狮子林钻一次假山迷宫", "去太湖边吃一次大闸蟹", "去苏州到周庄古镇坐一次夜船", "去苏州在东方之门下拍一张苏州地标", "去苏州丝绸博物馆看一次织锦表演"], "南京": ["去中山陵爬一次392级台阶", "去南京在夫子庙秦淮河上坐一次画舫", "去南京到先锋书店五台山店买一本书", "去明孝陵石象路走一次神道", "去南京在玄武湖划一次船看城墙倒影", "去南京到南京博物院民国馆穿越一次", "去鸡鸣寺求一次姻缘", "去南京在老门东吃一次鸭血粉丝汤", "去南京到美龄宫看一次梧桐项链", "去总统府看一次民国历史展", "去南京在栖霞山看一次红枫", "去南京到中华门城堡登一次城墙", "去牛首山看一次佛顶骨舍利", "去南京在南京长江大桥上走一次", "去南京到东南大学四牌楼校区拍一次大礼堂", "去大报恩寺看一次琉璃塔夜景", "去南京在颐和路民国公馆区走一圈"], "长沙": ["去橘子洲头看一次青年毛泽东雕像", "去长沙在坡子街吃一次臭豆腐", "去长沙到岳麓书院读一次惟楚有材", "去橘子洲看一次烟花秀", "去长沙在太平老街喝一次茶颜悦色", "去长沙到湖南省博物馆看一次辛追夫人", "去岳麓山爱晚亭看一次红叶", "去长沙在文和友吃一次小龙虾", "去长沙到IFS顶层KAWS雕塑打卡", "去天心阁看一次古城墙", "去长沙在解放西路蹦一次迪", "去长沙到烈士公园划一次船", "去靖港古镇走一次青石板路", "去长沙在超级文和友拍一组复古照片", "去长沙到马栏山看一次节目录制", "去铜官窑古镇体验一次制陶", "去长沙在湘江边夜跑一次"], "青岛": ["去栈桥看一次回澜阁海浪", "去青岛在八大关走一次万国建筑群", "去青岛到小麦岛看一次日落", "去崂山喝一次道观茶", "去青岛在五四广场看一次灯光秀", "去青岛到啤酒博物馆喝一次原浆啤酒", "去信号山俯瞰一次红瓦绿树", "去青岛在大学路网红墙拍一张照", "去青岛到台东夜市吃一次海鲜大排档", "去金沙滩踩一次细沙", "去青岛在奥帆中心看一次帆船出海", "去青岛到天主教堂拍一次婚纱照取景", "去小鱼山公园看一次老城全景", "去青岛在劈柴院吃一次烤鱿鱼", "去青岛到中山公园看一次樱花", "去第一海水浴场游一次泳", "去青岛在太平角喝一次海景咖啡"], "三亚": ["去三亚在亚龙湾沙滩上看一次日出", "去蜈支洲岛潜一次水看珊瑚", "去三亚到天涯海角拍一次地标照", "去三亚在椰梦长廊看一次日落", "去南山寺看一次108米海上观音", "去三亚到第一市场吃一次海鲜加工", "去三亚在呀诺达雨林走一次踏瀑戏水", "去三亚湾放一次风筝", "去三亚到鹿回头公园看一次三亚夜景", "去三亚在亚特兰蒂斯水世界玩一次海神之跃", "去大小洞天拍一次天梯照", "去三亚到后海村冲一次浪", "去三亚在南湾猴岛看一次猕猴", "去三亚在三亚免税店买一次全球好物", "去凤凰岛看一次灯光秀", "去三亚到崖州古城走一圈千年老街", "去三亚在清水湾踩一次会唱歌的沙滩"], "拉萨": ["去拉萨在布达拉宫广场看一次日出金顶", "去大昭寺磕一次长头", "去拉萨在八廓街转一次经筒", "去拉萨到色拉寺看一次辩经", "去纳木错看一次星空银河", "去拉萨在药王山拍一次布达拉宫全景", "去拉萨到哲蚌寺看一次雪顿节晒佛", "去甘丹寺徒步转一次山", "去拉萨在玛吉阿米喝一次甜茶", "去拉萨到罗布林卡看一次藏式园林", "去羊卓雍错看一次蓝宝石般的湖水", "去拉萨在光明港琼甜茶馆泡一个下午", "去拉萨到扎基寺拜一次财神", "去小昭寺看一次佛祖等身像", "去拉萨在拉萨河畔看一次日落", "去拉萨到楚布寺看一次藏传佛教仪式", "去拉鲁湿地看一次高原湿地"], "香港": ["去太平山顶缆车看一次维港夜景", "去香港在中环坐一次叮叮车穿越港岛", "去香港到天星码头坐一次天星小轮", "去维多利亚港看一次幻彩咏香江", "去香港在旺角女人街淘一次货", "去香港到兰桂坊喝一次cocktail", "去黄大仙祠求一次签", "去香港在香港迪士尼看一次烟花", "去香港到庙街夜市吃一次煲仔饭", "去大屿山天坛大佛参拜一次", "去香港在西环泳棚拍一次海景照", "去香港到深水埗吃一次公和荳品厂豆腐花", "去坚尼地城看一次海景日落", "去香港在油麻地警署前拍一张TVB打卡照", "去香港到南丫岛走一次洪圣爷湾远足径", "去长洲岛看一次太平清醮包山节", "去香港在港大本部大楼前拍一次校园照"]}, "出境旅行": {"出境旅行": ["在马丘比丘看一次云中古城日出", "在圣托里尼伊亚看一次爱琴海日落", "去肯尼亚马赛马拉看一次动物大迁徙", "在冰岛看一次北极光", "去卡帕多奇亚坐一次热气球", "在大堡礁潜一次水看珊瑚", "去京都穿一次和服游岚山", "在乌尤尼盐湖拍一次天空之镜", "去吴哥窟看一次日出映古寺", "在马尔代夫水上屋睡一晚", "去新西兰跳一次蹦极", "在阿马尔菲海岸开一次悬崖公路", "去挪威坐一次峡湾游轮", "在塞伦盖蒂草原露营一晚听狮吼", "去佩特拉古城穿越一次峡谷甬道", "在巴厘岛乌布梯田做一次瑜伽", "去班夫国家公园看一次翡翠湖", "在下龙湾坐一次木船穿行石林", "在摩洛哥撒哈拉沙漠骑一次骆驼看日落", "去维多利亚瀑布感受一次水雾彩虹", "在布拉格查理大桥看一次晨雾", "去瑞士少女峰坐一次齿轮火车", "在纽约百老汇看一场音乐剧", "去加拉帕戈斯看一次巨龟", "在巴塔哥尼亚走一次W线徒步", "去迪登录一次哈利法塔顶层", "在斐济外岛浮潜一次看海星", "去哥斯达黎加雨林滑一次索道", "在慕尼黑啤酒节喝一次一升啤酒", "去斐济坐在珊瑚礁上等一次日出", "在墨西哥城看一次弗里达·卡罗故居", "去坦桑尼亚登一次乞力马扎罗山", "在阿拉斯加看一次冰川崩塌", "去尼泊尔博卡拉滑一次滑翔伞", "在意大利托斯卡纳骑一次自行车穿葡萄园"]}, "自然奇观": {"看日出日落": ["去梅里雪山看一次日出", "去泰山日观峰看一次日出", "去黄山光明顶看一次日出", "去华山朝阳台看一次日出", "去峨眉山金顶看一次日出", "去武功山金顶看一次日出", "去牛背山看一次日出", "去元阳哈尼梯田看一次日出", "去布达拉宫药王山看一次日出", "去泸沽湖看一次日出", "去东极岛看一次日出", "去霞浦花竹村看一次日出", "去敦煌鸣沙山看一次日出", "去富士山看一次日出", "去蒲甘看一次日出", "去吴哥窟看一次日出", "去圣托里尼伊亚看一次日出", "去卡帕多奇亚看一次日出", "去乞力马扎罗山看一次日出", "去科罗拉多大峡谷看一次日出", "去巨石阵看一次日出", "去乌鲁鲁看一次日出", "去马丘比丘看一次日出", "去乌尤尼盐湖看一次日出", "去布罗莫火山看一次日出", "去哈来亚咔拉国家公园看一次日出", "去巴都尔山看一次日出", "去西奈山看一次日出", "去开普敦狮头山看一次日出", "去阿比斯库看一次日出"], "自然与冒险": ["在冰岛冰川上徒步一公里", "在沙漠里露营一晚看银河", "乘船穿越一次挪威峡湾", "在热气球上俯瞰一次大地", "在零下30度的地方泼一次水成冰"]}, "文化艺术": {"博物馆": ["去卢浮宫参观一次", "去大英博物馆参观一次", "去大都会艺术博物馆参观一次", "去梵蒂冈博物馆参观一次", "去故宫博物院参观一次", "去奥赛博物馆参观一次", "去乌菲齐美术馆参观一次", "去普拉多博物馆参观一次", "去埃及博物馆参观一次", "去冬宫艾尔米塔什博物馆参观一次", "去荷兰国立博物馆参观一次", "去东京国立博物馆参观一次", "去秦始皇帝陵博物院参观一次", "去MoMA现代艺术博物馆参观一次", "去美国自然历史博物馆参观一次", "去毕尔巴鄂古根海姆博物馆参观一次", "去墨西哥国立人类学博物馆参观一次", "去迪拜未来博物馆参观一次", "去阿布扎比卢浮宫参观一次", "去三星堆博物馆参观一次", "去上海博物馆东馆参观一次", "去南京博物院参观一次", "去湖北省博物馆参观一次", "去湖南博物院参观一次", "去苏州博物馆参观一次"], "艺术与文化": ["在百老汇看一场音乐剧", "亲手制作一件陶艺作品", "在博物馆里临摹一幅名画", "写一封信寄给十年后的自己", "学跳一支华尔兹"], "文化体验": ["去博物馆看一次特展", "参观一座美术馆", "看一场京剧/昆曲", "去听一场交响乐", "看一场话剧或音乐剧", "参观一座古城墙", "去寺庙参拜祈福", "参加一次非遗体验活动", "看一场相声/评书", "参观一座古建筑群", "去看一场芭蕾舞", "参加一次书展/艺术展", "去听一场livehouse", "参观一座故居", "看一场歌剧", "参加一次博物馆之夜", "去参观一座城堡", "看一场舞蹈表演", "参观一座古墓", "去参加一次诗歌朗诵会", "看一场马戏团表演", "参观一座教堂", "参加一次电影节/影展", "去博物馆参加一次讲座", "参观一座古镇", "看一场杂技表演", "参加一次传统手工艺展", "去参观一座皇宫", "听一场民谣演出", "参观一座古塔"]}, "美食探索": {"美食体验": ["在意大利那不勒斯吃一次正宗玛格丽特披萨", "在曼谷街头吃一次船面和芒果糯米饭", "在京都吃一次怀石料理", "在圣塞巴斯蒂安吃一次Pintxos小食", "在吉隆坡吃一次咖喱叻沙", "在德克萨斯吃一次烟熏牛腩BBQ", "在哥本哈根吃一次开放三明治Smørrebrød", "在香港老茶楼喝一次早茶吃点心", "在孟买吃一次正宗咖喱配馕饼", "在大阪道顿堀吃一次章鱼烧和串炸", "在柏林吃一次咖喱香肠配薯条", "在成都吃一次正宗麻辣火锅", "在巴黎吃一次可颂配咖啡早餐", "在墨西哥城吃一次街边Taco配龙舌兰", "在首尔广藏市场吃一次活章鱼和绿豆煎饼", "在秘鲁利马吃一次Ceviche酸橘汁腌鱼"], "味蕾与烹饪": ["在法国学做一次可颂面包", "在泰国参加一次烹饪课学做冬阴功", "在日本和寿司师傅学做一次寿司", "在意大利托斯卡纳酒庄品一次葡萄酒", "在成都学做一次正宗回锅肉"], "美食探索": ["学会做一道拿手硬菜", "复刻一道在餐厅吃过的美食", "学做烘焙甜点（蛋糕/面包/饼干）", "自己动手做一顿火锅", "去夜市从头吃到尾", "打卡一座城市的必吃榜", "学做一道家乡菜", "做一顿米其林风格的精致料理", "去菜市场买食材自己做饭", "学做一杯手冲咖啡", "体验一次品茶", "去学习调酒", "学做一次brunch早午餐", "打卡10家网红甜品店", "尝试自己做泡菜/酸菜", "去农家乐体验采摘", "学做一次日料（寿司/刺身）", "亲手做一次巧克力", "去学习制作披萨", "尝试生酮/轻断食一天", "自己酿一坛青梅酒", "打卡一座城市的早茶", "学做一道川菜", "去探访一座小城的本地美食", "参加一次美食烹饪课", "尝试自己做冰淇淋", "学做一份减脂餐", "去吃一顿omakase", "完成一次街边小吃打卡挑战", "尝试一个月自己做早餐"]}, "运动健康": {"极限运动": ["在新西兰皇后镇蹦极一次", "在澳大利亚拜伦湾跳一次伞", "在土耳其费特希耶滑一次滑翔伞", "在尼泊尔博卡拉滑一次滑翔伞", "在夏威夷北岸冲一次大浪", "在哥斯达黎加雨林滑一次高空索道", "在大堡礁潜一次水看珊瑚礁", "在冰岛索尔黑马冰川攀一次冰", "在阿拉斯加直升机滑一次野雪", "在泰国清迈山地骑一次速降山地车", "在尼加拉瓜火山滑一次沙", "在印度亨比攀一次岩", "在马德拉峡谷漂一次流", "在夏威夷毛伊岛风筝冲浪一次", "在瑞士因特拉肯峡谷跳一次秋千", "在菲律宾长滩岛体验一次深潜考证"], "运动健身": ["完成一次全程马拉松（42.195公里）", "完成一次半程马拉松（21.1公里）", "连续做50个标准俯卧撑", "深蹲突破自身体重1.5倍", "连续做15个引体向上", "完成一次10公里跑且配速进6分钟", "体脂率降至15%（男）或22%（女）以下", "完成一次铁人三项赛", "坚持瑜伽练习30天不间断", "游泳连续1000米不休息", "完成一次百公里骑行", "平板支撑突破5分钟", "学会自由泳标准动作并游200米", "完成一个标准倒立撑", "参加一次CrossFit比赛或公开课", "完成一次5公里越野跑"], "运动健康": ["完成一次半程马拉松", "学会游泳并游完200米", "完成一次10公里徒步", "学会冲浪", "挑战一次室内攀岩", "完成30天连续瑜伽打卡", "学会打网球", "完成一次自行车长途骑行", "学会打羽毛球并赢一局", "体验一次潜水", "完成30天平板支撑挑战", "学会滑雪（双板或单板）", "尝试一次蹦极", "完成一次城市跑团活动", "学会滑板并流畅滑行", "体验一次室内滑雪", "学会打保龄球", "完成一次登山徒步", "学会打乒乓球", "体验一次卡丁车", "学会游泳并考取深水证", "完成30天八段锦练习", "挑战一次滑翔伞", "学会射箭并射中靶心", "体验一次真人CS", "完成一次野外生存挑战", "学会帆板冲浪", "完成一次划船体验", "挑战一次高空弹跳", "学会打太极"], "轻户外": ["去公园捡一片完整的落叶", "周末去郊区徒步10公里", "去山上露营看星星", "去海边赶海捡贝壳", "在城市公园观察鸟类", "去茶园采茶体验", "去果园摘水果", "去郊外捡石头", "在城市周边进行一次野餐", "去爬山看云海", "去森林里进行一次自然探险", "去草原骑马", "去沙漠看星空", "去海边看日出", "在公园长椅上发呆一下午", "去河边钓鱼", "去农场体验农活", "去郊外看萤火虫", "在雨后的森林里散步", "去山顶看云海日出", "去草原看银河", "在海边捡漂流木做装饰", "去山里找一处温泉", "在城市周边进行一次公路旅行", "去高山草甸露营", "去海边看蓝眼泪", "去森林里捡松果", "在古镇老街闲逛一天", "去乡村住一次民宿", "在郊外进行一次野炊"]}, "自我成长": {"学习技能": ["学会弹一首完整的吉他曲", "学会做10道拿手菜", "考取潜水PADI开放水域证书", "学会游泳并连续游200米", "学会一门外语达到日常对话水平", "学会拍摄和剪辑一支1分钟短片", "学会制作一件陶艺作品", "学会用毛笔写一幅春联", "学会插花并完成一个花艺作品", "学会打一套太极拳", "学会品鉴葡萄酒并分辨3种葡萄品种", "学会手冲咖啡并掌握3种冲煮方法", "学会烘焙并独立制作一个生日蛋糕", "学会编织一条围巾", "学会一种传统手工艺（如扎染/蜡染/刺绣）", "学会操作无人机并航拍一组照片"], "身心与成长": ["在禅修中心静修三天", "完成一次10公里跑步", "在录音棚录制一首歌", "学会一种冥想方法并坚持30天", "完成一次7天断食排毒"], "自我成长": ["学完一门非遗手艺并完成一件作品", "拍一条vlog记录生活", "学摄影并给朋友拍一组照片", "坚持日更小红书100天", "每周读一本书并写读书笔记", "学弹一首完整的吉他曲", "考取一个专业证书", "学会一门外语的基础会话", "练一手好看的毛笔字", "每年给自己拍一组写真", "挑战30天戒糖", "完成一次21天早起打卡", "学会剪辑一个完整的视频", "完成一副数字油画作品", "给五年后的自己写一封信", "学做一道拿手的硬菜", "学会织一件围巾或毛衣", "学完一门线上课程并拿证书", "挑战一周穿搭不重样", "学会调一杯鸡尾酒", "参加一次马拉松（全程/半程/迷你）", "完成10公里跑步挑战", "学会游泳并游完200米", "考取机动车驾驶证", "学会做手账记录生活", "尝试做自媒体账号并发布内容", "学一门新乐器（尤克里里/口琴/卡林巴）", "完成一次完整的30天打卡挑战", "学会做咖啡拉花", "参加一次线下考试（托福/雅思/GRE）"], "技能学习": ["学会做一道复杂的法式甜点", "学习摄影并完成一组作品", "学会剪辑短视频", "学习绘画（油画/水彩/素描）", "学会一门编程语言", "学习做咖啡拉花", "学习花艺设计", "学会调酒", "学习茶艺", "学会烘焙面包", "学习视频拍摄和后期", "学会写一手好字", "学习理财投资知识", "学会打网球", "学习游泳", "学会吉他弹唱", "学习写作并完成一篇投稿", "学会做手工皮具", "学习一门新语言", "学会打羽毛球", "学习瑜伽", "学习普拉提", "学习滑雪", "学习油画棒插画", "学习摄影构图技巧", "学习excel高级技能", "学习心理学基础知识", "学习商业计划书写作", "学习演讲与口才", "学习理财规划"]}, "生活仪式": {"节日庆典": ["去巴西里约参加一次狂欢节", "去印度参加一次排灯节Diwali", "去德国慕尼黑参加一次啤酒节", "去泰国清迈放一次水灯节天灯", "去印度参加一次洒红节Holi", "去泰国参加一次宋干节泼水大战", "去西班牙布尼奥尔参加一次番茄大战La Tomatina", "去墨西哥参加一次亡灵节Día de los Muertos", "去苏格兰设得兰参加一次Up Helly Aa火节", "去新奥尔良参加一次Mardi Gras狂欢节", "去威尼斯参加一次面具狂欢节", "去香港长洲看一次太平清醮包山节", "去日本京都看一次祇园祭花车巡游", "去西班牙潘普洛纳看一次奔牛节", "去中国哈尔滨参加一次冰雪节", "去尼泊尔加德满都参加一次因陀罗节"], "仪式与纪念": ["在生日当天做一件从未做过的事", "在跨年夜看一次烟花", "为自己办一次个人摄影展（哪怕只有9张照片）", "在旧书店找到一本心仪已久的绝版书", "在新年第一天看一次日出"], "日常生活的小确幸": ["在雪天吃一次户外火锅", "在阳台上种一棵植物并看到它开花", "在老茶馆泡一整天听戏", "在公园长椅上看完一本书", "在凌晨的城市独自散步一次"], "仪式感": ["在跨年夜放烟花看倒计时", "给未来的自己寄一张明信片", "每月给自己买一束花", "在生日当天拍一组纪念照", "和家人一起拍一张正式全家福", "在结婚纪念日准备惊喜", "给自己办一个成人礼", "每年做一次年度复盘和新年规划", "在重要日子吃一顿仪式感晚餐", "收集整理一年的照片做成相册", "在特殊节日给对方手写一封信", "给自己举办一个小型的个人展", "参加一场正式的舞会或晚宴", "在山顶或海边看一次完整日出", "布置一个有氛围的圣诞角落", "给自己写一份悼词（关于想成为的人）", "制作一个时间胶囊并约定开启日期", "参加一场朋友的婚礼并送上祝福", "在毕业季拍一组学士服写真", "在入职第一天记录职场第一天", "给孩子办一个百日宴", "每月定一个'Me Day'独处日", "在搬家时整理一份'新家清单'", "给自己颁发一个年度成就奖", "在除夕守夜并写下新年愿望"], "浪漫体验": ["在摩天轮最高点亲吻", "和喜欢的人一起放孔明灯", "在海边看一次完整日落", "和另一半去迪士尼看烟花", "一起穿情侣装逛街", "在只有烛光的房间共进晚餐", "一起去露营数星星", "在摩天轮里交换日记", "去对方长大的城市看看", "在雨中牵手漫步", "一起在海边写下心愿装进漂流瓶", "去天台看城市夜景", "一起坐绿皮火车去远方", "在樱花树下拍照", "一起去寺庙祈福", "为对方做一顿完整的生日大餐", "一起养一只小动物", "去对方学校走走", "在跨年夜倒数接吻", "一起在live house听演唱会", "去北极/冰岛看极光", "坐一次热气球", "在星空下许愿", "一起去潜水看海底世界", "体验一次邮轮旅行", "去薰衣草庄园拍照", "一起参加朋友的求婚仪式", "在樱花季坐一次观光列车", "一起打卡对方的愿望清单", "在雨天窗边一起发呆"]}, "社交连接": {"与世界连接": ["在异国交一个当地朋友", "用外语和陌生人完成一次对话", "参加一次国际志愿者活动", "给陌生人写一张明信片", "在音乐节上和万人合唱一首歌"], "社交连接": ["和爸妈来一次促膝长谈", "给很久没联系的朋友写封信", "组织一次家庭聚会", "和闺蜜/兄弟来一次说走就走的旅行", "去拜访曾经教过你的老师", "参加一次线下读书会", "和同事来一次城市探索", "参加一场陌生人社交活动", "和高中/大学同学来一次聚餐", "带父母去旅行一次", "给爷爷奶奶拍一套写真", "给妈妈做一次全身按摩", "和爸爸喝一次酒聊聊天", "和兄弟姐妹来一次深夜谈心", "参加朋友的婚礼当伴郎/伴娘", "和喜欢的人一起见家长", "和另一半认识彼此的朋友圈", "给邻居送一份自己做的点心", "参加一场社区志愿活动", "和多年未见的老同学重聚", "去孤儿院或养老院做志愿者", "认养一个偏远山区的孩子", "组织一次老友记聚会", "和家人一起包饺子", "给闺蜜当一次伴娘", "和另一半一起给对方父母准备礼物", "参加一场校友会活动", "和室友来一次同居回忆游", "邀请朋友来家里做客", "给好久不见的笔友寄一份礼物"], "公益参与": ["去养老院陪老人聊天", "去孤儿院陪伴小朋友", "参加一次社区志愿活动", "参与一次河流清理", "去山区支教一周", "参与动物救助站志愿服务", "参加无偿献血", "认养一棵树木", "参与海滩垃圾清理", "为流浪猫狗做志愿者", "参与公益徒步筹款", "为贫困地区捐书", "参与义卖活动", "为老人拍摄写真", "参与环保宣传活动", "去特殊教育学校陪伴孩子", "参与社区垃圾分类宣传", "为贫困家庭做一顿饭", "参与艾滋病公益宣传", "为山区儿童捐衣物", "参与城市绿化植树", "参与心理健康公益活动", "为视障人士做志愿服务", "参与反家庭暴力宣传", "为孤寡老人送温暖", "参与青少年成长陪伴计划", "为野生动物保护出力", "参与旧衣捐赠活动", "为听障人士做志愿服务", "参与公益跑/健步行筹款"]}, "创意手工": {"手工与匠心": ["亲手打磨一件木器", "学习吹制一件玻璃作品", "体验一次传统扎染并做出一件作品", "在非遗工作坊学一项传统手艺", "亲手缝制一个布袋或靠垫"], "创意手工": ["DIY一个香薰蜡烛", "做一幅数字油画", "拼完一幅1000片拼图", "织一个手工香包送人", "用干花做一个相框装饰", "收集落叶做植物书签", "自己动手做皮具（钱包/卡包）", "学做陶瓷并烧制一个杯子", "用废旧物品改造家具", "做一个属于自己的手账本", "手工钩织一个玩偶或挂件", "学做玻璃艺术（灯工/吹制）", "自己调制一瓶专属香水", "用滴胶做一个创意摆件", "学木工做一个简易书架", "刺绣一幅小作品", "做一套手工皂", "用羊毛毡戳一个动物造型", "自己染一条扎染围巾", "用石头拼一幅画", "做一本手工相册", "学做永生花装饰", "DIY一个手机壳", "做一对情侣手模", "用贝壳做一个风铃", "自己串一条珍珠项链", "学折纸艺术（千纸鹤/川崎玫瑰）", "做一张手工贺卡", "用旧衣服改造一个包包", "学做奶油胶手机支架"]}, "挑战与突破": {"挑战与突破": ["完成一次公开演讲", "考取一个潜水证", "在高空走一次玻璃栈道", "完成一次攀岩登顶", "学骑一次马并策马小跑"], "旅途中的一刻": ["坐一次横跨大陆的火车（如西伯利亚铁路）", "在异国街头迷路一次并找到路", "搭一次便车到达目的地", "住一晚帐篷听雨声入眠", "在路边摊吃一顿最地道的当地早餐"], "体验新鲜": ["尝试一次剧本杀", "体验一次密室逃脱", "去一次漫展并cosplay", "尝试一次VR游戏", "去体验一次蹦床", "尝试一次卡丁车比赛", "去听一次线下脱口秀", "尝试一次骑马", "去体验一次射击", "尝试一次路亚钓鱼", "去体验一次热气球", "尝试一次室内跳伞", "去参加一次彩弹射击", "体验一次真人cs", "尝试一次滑雪模拟机", "去体验一次玻璃栈道", "尝试一次攀冰", "去参加一次拳击课", "体验一次潜水艇参观", "尝试一次帆船出海", "去体验一次洞穴探险", "尝试一次飞钓", "去参加一次跑酷体验", "体验一次雪地摩托", "尝试一次摩托艇", "去体验一次动力滑翔伞", "尝试一次野外生存训练", "去参加一次禅修体验", "体验一次射击馆射箭", "尝试一次即兴喜剧表演"], "城市探索": ["去一座从未去过的城市citywalk", "参加一次城市探索定向赛", "在陌生的城市迷路并找到出口", "探访一座小众宝藏城市", "在老城区来一次扫街摄影", "去一座城市的最高楼俯瞰夜景", "探访城市的隐藏小店", "在咖啡馆待一下午看书", "去城市的旧货市场淘宝", "参观一座城市的博物馆", "在城市的公园待一整天发呆", "去城市的夜市从头吃到尾", "探访城市的特色建筑", "参加一次城市徒步活动", "去城市的大学校园走走", "在城市的江边/河边骑单车", "探访城市的艺术区", "去城市的动物园/植物园", "参加一次城市音乐节", "探访城市的老街巷", "在城市的书店待一整天", "去城市的寺庙道观祈福", "参加一次城市马拉松", "探访城市的菜市场", "去城市的天台酒吧喝酒", "在城市的大学食堂吃一顿饭", "参加一次城市骑行活动", "探访城市的创意园区", "去城市的老厂房改造区", "参加一次城市露营"]}, "理财规划": {"存钱理财": ["存满3个月生活费的应急备用金", "开立一个指数基金定投账户并坚持定投12个月", "还清所有信用卡欠款", "开设一个专属旅行储蓄账户并存入目标金额", "学习并实践12存单法一年", "为自己购买一份商业保险", "开始使用记账App连续记账90天", "读完一本投资理财经典书籍并做笔记", "设定一个具体购房首付金额并制定存钱计划", "开设养老金账户并存入第一笔钱", "将月收入的20%强制储蓄连续6个月", "制定一份个人资产负债表", "学习并完成一次基金定投操作", "设立一个教育基金账户", "完成一次个人财务健康自测并制定改善计划", "实现一个具体的被动收入目标（如年分红1000元）"], "理财规划": ["制定一份年度存钱计划", "学习基金投资基础知识", "开设一个投资账户", "为自己买第一份保险", "制定一个清晰的预算表", "学习理财书籍《小狗钱钱》", "尝试一个月记账", "设定一个明确的存款目标", "学习股票基础知识", "购买第一件黄金首饰", "制定一份养老计划", "学会分析财务报表", "设定每月强制储蓄比例", "学习复利投资概念", "尝试基金定投", "制定保险配置方案", "学习国债和债券知识", "设定一个旅行基金目标", "学习个人税务知识", "制定一份买房计划", "开始做副业赚钱", "学会区分资产和负债", "设定一个FIRE目标", "学习被动收入知识", "制定一份家庭财务规划", "开始定投指数基金", "学习保险配置原则", "设定一个财务自由目标", "学习理财博主的方法", "开始配置紧急备用金"]}, "疗愈放松": {"疗愈放松": ["给自己安排一次'me day'", "尝试一次冥想课程", "去泡一次温泉", "做一次全身按摩放松", "在家点上香薰蜡烛听音乐", "去寺庙住一晚体验清修", "做一次正念冥想", "去森林里进行'森林浴'", "给自己买一束花装饰房间", "写三件感恩的事情", "给自己做一次面部护理", "去美容院做一次全身SPA", "躺在床上什么都不做一天", "去海边发呆一下午", "做一次瑜伽放松", "给自己写一封鼓励信", "去咖啡馆点一杯咖啡看一本书", "关掉手机一天", "去公园散步晒太阳", "给自己做一顿健康的美食", "洗一个长时间的热水澡", "整理房间进行断舍离", "听一个治愈系播客", "去大自然中深呼吸", "给自己做一次美甲", "去足疗店泡脚按摩", "给自己换一个新发型", "躺在草地上看云", "做一个小时的拉伸放松", "给自己买一份礼物"]}};
 const CAT_ICONS = {'城市旅行':'🏙️','出境旅行':'✈️','自然奇观':'🌄','文化艺术':'🎨','美食探索':'🍜','运动健康':'💪','自我成长':'📚','生活仪式':'🌸','社交连接':'🤝','创意手工':'✂️','挑战与突破':'🎯','理财规划':'💰','疗愈放松':'🧘'};
 const CAT_COLORS = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF8C42','#98D8C8','#F7DC6F','#BB8FCE','#85C1E9','#82E0AA','#F0B27A'];
-let catColorMap = {}; let _ci = 0;
-for (let c in HIERARCHY) { catColorMap[c] = CAT_COLORS[_ci % CAT_COLORS.length]; _ci++; }
+let catColorMap={};let _ci=0;
+for(let c in HIERARCHY){catColorMap[c]=CAT_COLORS[_ci%CAT_COLORS.length];_ci++;}
+const ALL_SMALL_CATS=[];
+for(let b in HIERARCHY)for(let s in HIERARCHY[b])ALL_SMALL_CATS.push(s);
 
-const ALL_SMALL_CATS = [];
-for (let b in HIERARCHY) for (let s in HIERARCHY[b]) ALL_SMALL_CATS.push(s);
+const SHARE_URL='https://wentingchenwt-arch.github.io/-wish-list/';
+const SLOGANS=['快来围观XXX的人生心愿清单','开启你的心愿清单','人生不荒废，等你建心愿'];
 
-// === State ===
-let appData = null;
-let currentFilter = 'all'; // 'all', 'done', 'undone', or a smallCat name
-let addSelectedCat = null;
-let editingWishKey = null; // for edit modal
+let appData=null,currentFilter='all',addSelectedCat=null,editingWishKey=null,expandedCat=null;
 
-// === Persistence ===
-function loadData() {
-  const r = localStorage.getItem('wishList_v10');
-  appData = r ? JSON.parse(r) : null;
-}
-function saveData() { localStorage.setItem('wishList_v10', JSON.stringify(appData)); }
-function isNewUser() { return !appData || !appData.onboarded; }
-
-// === Stats ===
-function getStats() {
-  if (!appData) return {total:0,done:0,pct:0};
-  let total = 0, done = 0;
-  for (let cat in appData.wishes) {
-    for (let w of appData.wishes[cat]) {
-      total++;
-      if (appData.completed[cat+'::'+w]) done++;
-    }
-  }
-  return { total, done, pct: total > 0 ? Math.round(done/total*100) : 0 };
+function loadData(){const r=localStorage.getItem('wishList_v10');appData=r?JSON.parse(r):null;}
+function saveData(){localStorage.setItem('wishList_v10',JSON.stringify(appData));}
+function isNewUser(){return !appData||!appData.onboarded;}
+function getStats(){
+  if(!appData)return{total:0,done:0,pct:0};
+  let total=0,done=0;
+  for(let cat in appData.wishes)for(let w of appData.wishes[cat]){total++;if(appData.completed[cat+'::'+w])done++;}
+  return{total,done,pct:total>0?Math.round(done/total*100):0};
 }
 
-// === Init ===
-function init() {
+function init(){
   loadData();
-  if (isNewUser()) {
-    showPage('pageOnboard1');
-    document.getElementById('bottomNav').style.display = 'none';
-  } else {
-    showPage('pageHome');
-    document.getElementById('bottomNav').style.display = 'flex';
-    renderHome();
-  }
+  if(isNewUser()){showPage('pageOnboard1');document.getElementById('bottomNav').style.display='none';}
+  else{showPage('pageHome');document.getElementById('bottomNav').style.display='flex';renderHome();}
 }
 
-// === Page switching ===
-function showPage(id) {
-  document.querySelectorAll('.page, .reselect-page').forEach(p => p.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) el.classList.add('active');
-  // Bottom nav visibility
-  const mainPages = ['pageHome','pageAdd','pageSettings','pageShare'];
-  document.getElementById('bottomNav').style.display = mainPages.includes(id) ? 'flex' : 'none';
-  // Nav highlight
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === id));
+function showPage(id){
+  document.querySelectorAll('.page,.reselect-page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById(id);if(el)el.classList.add('active');
+  const mainPages=['pageHome','pageAdd','pageSettings','pageShare'];
+  document.getElementById('bottomNav').style.display=mainPages.includes(id)?'flex':'none';
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===id));
 }
-
-function switchPage(id) {
+function switchPage(id){
   showPage(id);
-  if (id === 'pageHome') renderHome();
-  if (id === 'pageAdd') renderAddPage();
-  if (id === 'pageSettings') renderSettings();
-  if (id === 'pageShare') renderShare();
+  if(id==='pageHome')renderHome();
+  if(id==='pageAdd')renderAddPage();
+  if(id==='pageSettings')renderSettings();
+  if(id==='pageShare')renderShare();
 }
 
-// ==========================================
-// ONBOARDING STEP 1
-// ==========================================
-document.getElementById('nameInput').addEventListener('input', function() {
-  document.getElementById('nameNextBtn').disabled = !this.value.trim();
-});
-document.getElementById('nameInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && this.value.trim()) goToStep2();
-});
+// ========== ONBOARD STEP 1 ==========
+document.getElementById('nameInput').addEventListener('input',function(){document.getElementById('nameNextBtn').disabled=!this.value.trim();});
+document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim())goToStep2();});
 
-function goToStep2() {
-  const name = document.getElementById('nameInput').value.trim();
-  if (!name) return;
-  // Init appData
-  appData = { ownerName: name, onboarded: false, selectedSmallCats: {}, wishes: {}, completed: {}, wishTimestamps: {}, customCats: [] };
+function goToStep2(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  appData={ownerName:name,onboarded:false,selectedSmallCats:{},wishes:{},completed:{},wishTimestamps:{},customCats:[],cardOrder:[]};
   showPage('pageOnboard2');
-  document.getElementById('step2Title').textContent = name + '，挑选你感兴趣的心愿';
+  document.getElementById('step2Title').textContent=name+'，挑选你感兴趣的心愿';
   renderObCategoryList();
 }
 
-// ==========================================
-// ONBOARDING STEP 2 - Select categories
-// ==========================================
-function renderObCategoryList() {
-  const el = document.getElementById('obCategoryList');
-  el.innerHTML = buildCategoryListHTML('ob');
-  updateObSelectAll();
-  updateObInfo();
+// ========== ONBOARD STEP 2 ==========
+function renderObCategoryList(){
+  document.getElementById('obCategoryList').innerHTML=buildCategoryListHTML('ob');
+  updateObSelectAll();updateObInfo();
 }
 
-function buildCategoryListHTML(prefix) {
-  let html = '', idx = 0;
-  for (let bigCat in HIERARCHY) {
-    const color = catColorMap[bigCat], icon = CAT_ICONS[bigCat] || '📌', smallCats = HIERARCHY[bigCat];
-    let totalWishes = 0;
-    for (let sc in smallCats) totalWishes += smallCats[sc].length;
-    const allSel = Object.keys(smallCats).every(sc => appData.selectedSmallCats[sc]);
-    const partial = !allSel && Object.keys(smallCats).some(sc => appData.selectedSmallCats[sc]);
-    html += `<div class="obig-cat fade-in" style="animation-delay:${idx*30}ms">
+function buildCategoryListHTML(prefix){
+  let html='',idx=0;
+  for(let bigCat in HIERARCHY){
+    const color=catColorMap[bigCat],icon=CAT_ICONS[bigCat]||'📌',smallCats=HIERARCHY[bigCat];
+    let totalWishes=0;for(let sc in smallCats)totalWishes+=smallCats[sc].length;
+    const allSel=Object.keys(smallCats).every(sc=>appData.selectedSmallCats[sc]);
+    const partial=!allSel&&Object.keys(smallCats).some(sc=>appData.selectedSmallCats[sc]);
+    html+=`<div class="obig-cat fade-in" style="animation-delay:${idx*30}ms">
       <div class="obig-head" onclick="toggleBigCatBody(this)">
         <div class="cb ${allSel?'checked':partial?'partial':''}" onclick="event.stopPropagation();${prefix}ToggleBigCat('${bigCat}')"></div>
         <div class="obig-icon" style="background:${color}22;color:${color}">${icon}</div>
@@ -479,24 +414,23 @@ function buildCategoryListHTML(prefix) {
         <div class="obig-arrow">▾</div>
       </div>
       <div class="obig-body">`;
-    for (let sc in smallCats) {
-      const isSel = appData.selectedSmallCats[sc];
-      html += `<div class="osmall">
+    for(let sc in smallCats){
+      const isSel=appData.selectedSmallCats[sc];
+      html+=`<div class="osmall">
         <div class="cb ${isSel?'checked':''}" onclick="${prefix}ToggleSmallCat('${bigCat}','${sc}')"></div>
         <div class="osmall-name">${sc}</div>
         <div class="osmall-count">${smallCats[sc].length}个</div>
       </div>`;
     }
-    html += '</div></div>';
-    idx++;
+    html+='</div></div>';idx++;
   }
-  // Custom categories
-  if (appData.customCats && appData.customCats.length > 0) {
-    html += '<div style="padding:8px 16px"><div style="font-size:12px;color:var(--text2);font-weight:600;margin-bottom:4px">自定义分类</div></div>';
-    appData.customCats.forEach(sc => {
-      const isSel = appData.selectedSmallCats[sc];
-      const wishes = appData.wishes[sc] || [];
-      html += `<div class="obig-cat"><div class="osmall" style="margin:0;padding:12px 14px">
+  // Custom cats
+  if(appData.customCats&&appData.customCats.length>0){
+    html+='<div style="padding:8px 16px"><div style="font-size:12px;color:var(--text2);font-weight:600;margin-bottom:4px">自定义分类</div></div>';
+    appData.customCats.forEach(sc=>{
+      const isSel=appData.selectedSmallCats[sc];
+      const wishes=appData.wishes[sc]||[];
+      html+=`<div class="obig-cat"><div class="osmall" style="margin:0;padding:12px 14px">
         <div class="cb ${isSel?'checked':''}" onclick="${prefix}ToggleSmallCat('自定义','${sc}')"></div>
         <div class="osmall-name">${sc}</div>
         <div class="osmall-count">${wishes.length}个</div>
@@ -506,532 +440,380 @@ function buildCategoryListHTML(prefix) {
   return html;
 }
 
-function toggleBigCatBody(h) {
-  const b = h.nextElementSibling;
-  const a = h.querySelector('.obig-arrow');
-  b.classList.toggle('open');
-  a.classList.toggle('open', b.classList.contains('open'));
+function toggleBigCatBody(h){
+  const b=h.nextElementSibling,a=h.querySelector('.obig-arrow');
+  b.classList.toggle('open');a.classList.toggle('open',b.classList.contains('open'));
 }
 
-// Onboard category toggle
-function obToggleBigCat(bigCat) { toggleBigCatSelect(bigCat, 'ob'); }
-function obToggleSmallCat(bigCat, smallCat) { toggleSmallCatSelect(bigCat, smallCat, 'ob'); }
-function obSelectAll() { selectAllCats('ob'); }
-function obDeselectAll() { deselectAllCats('ob'); }
-function obToggleSelectAll() {
-  const all = []; for (let b in HIERARCHY) for (let s in HIERARCHY[b]) all.push(s);
-  all.every(s => appData.selectedSmallCats[s]) ? obDeselectAll() : obSelectAll();
+// Category toggle with auto-collapse for single small cat
+function obToggleBigCat(bigCat){toggleBigCatSelect(bigCat,'ob');}
+function obToggleSmallCat(bigCat,smallCat){toggleSmallCatSelect(bigCat,smallCat,'ob');}
+function obSelectAll(){selectAllCats('ob');}
+function obDeselectAll(){deselectAllCats('ob');}
+function obToggleSelectAll(){
+  const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
+  all.every(s=>appData.selectedSmallCats[s])?obDeselectAll():obSelectAll();
 }
-function updateObSelectAll() {
-  const cb = document.getElementById('obSelectAllCb'); if (!cb) return;
-  const all = []; for (let b in HIERARCHY) for (let s in HIERARCHY[b]) all.push(s);
-  const allSel = all.length > 0 && all.every(s => appData.selectedSmallCats[s]);
-  const some = all.some(s => appData.selectedSmallCats[s]);
-  cb.className = 'cb' + (allSel ? ' checked' : some ? ' partial' : '');
+function updateObSelectAll(){
+  const cb=document.getElementById('obSelectAllCb');if(!cb)return;
+  const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
+  const allSel=all.length>0&&all.every(s=>appData.selectedSmallCats[s]);
+  const some=all.some(s=>appData.selectedSmallCats[s]);
+  cb.className='cb'+(allSel?' checked':some?' partial':'');
 }
-function updateObInfo() {
-  let count = 0; for (let s in appData.selectedSmallCats) if (appData.selectedSmallCats[s]) count++;
-  const info = document.getElementById('step2Info');
-  const btn = document.getElementById('step2NextBtn');
-  if (info) info.textContent = '已选 ' + count + ' 个分类';
-  if (btn) btn.disabled = count === 0;
+function updateObInfo(){
+  let count=0;for(let s in appData.selectedSmallCats)if(appData.selectedSmallCats[s])count++;
+  const info=document.getElementById('step2Info');
+  const btn=document.getElementById('step2NextBtn');
+  if(info)info.textContent='已选 '+count+' 个分类';
+  if(btn)btn.disabled=count===0;
 }
 
-// Generic toggle functions
-function toggleBigCatSelect(bigCat, prefix) {
-  const sc = HIERARCHY[bigCat];
-  const all = Object.keys(sc).every(s => appData.selectedSmallCats[s]);
-  for (let s in sc) {
-    appData.selectedSmallCats[s] = !all;
-    if (!all && !appData.wishes[s]) appData.wishes[s] = [...sc[s]];
-    if (all) delete appData.wishes[s];
-  }
+// Re-select variants
+function rsToggleBigCat(bigCat){toggleBigCatSelect(bigCat,'rs');}
+function rsToggleSmallCat(bigCat,smallCat){toggleSmallCatSelect(bigCat,smallCat,'rs');}
+function rsSelectAll(){selectAllCats('rs');}
+function rsDeselectAll(){deselectAllCats('rs');}
+function rsToggleSelectAll(){
+  const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
+  all.every(s=>appData.selectedSmallCats[s])?rsDeselectAll():rsSelectAll();
+}
+function updateRsSelectAll(){
+  const cb=document.getElementById('rsSelectAllCb');if(!cb)return;
+  const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
+  const allSel=all.length>0&&all.every(s=>appData.selectedSmallCats[s]);
+  const some=all.some(s=>appData.selectedSmallCats[s]);
+  cb.className='cb'+(allSel?' checked':some?' partial':'');
+}
+function updateRsInfo(){
+  let count=0;for(let s in appData.selectedSmallCats)if(appData.selectedSmallCats[s])count++;
+  const info=document.getElementById('rsInfo');if(info)info.textContent='已选 '+count+' 个分类';
+}
+
+function toggleBigCatSelect(bigCat,prefix){
+  const sc=HIERARCHY[bigCat];
+  const all=Object.keys(sc).every(s=>appData.selectedSmallCats[s]);
+  for(let s in sc){appData.selectedSmallCats[s]=!all;if(!all&&!appData.wishes[s])appData.wishes[s]=[...sc[s]];if(all)delete appData.wishes[s];}
   refreshCatList(prefix);
 }
-function toggleSmallCatSelect(bigCat, smallCat, prefix) {
-  const isSel = appData.selectedSmallCats[smallCat];
-  appData.selectedSmallCats[smallCat] = !isSel;
-  if (!isSel) {
-    if (bigCat !== '自定义' && HIERARCHY[bigCat] && HIERARCHY[bigCat][smallCat]) {
-      if (!appData.wishes[smallCat]) appData.wishes[smallCat] = [...HIERARCHY[bigCat][smallCat]];
+function toggleSmallCatSelect(bigCat,smallCat,prefix){
+  const isSel=appData.selectedSmallCats[smallCat];
+  appData.selectedSmallCats[smallCat]=!isSel;
+  if(!isSel){
+    if(bigCat!=='自定义'&&HIERARCHY[bigCat]&&HIERARCHY[bigCat][smallCat]){
+      if(!appData.wishes[smallCat])appData.wishes[smallCat]=[...HIERARCHY[bigCat][smallCat]];
     }
-  } else {
-    delete appData.wishes[smallCat];
-  }
-  // If bigCat has only 1 small cat, auto-collapse after selecting
-  const smallCount = (bigCat !== '自定义' && HIERARCHY[bigCat]) ? Object.keys(HIERARCHY[bigCat]).length : 1;
-  if (smallCount === 1) {
-    const obigCat = event.target.closest('.obig-cat');
-    if (obigCat) {
-      // Update small cat checkbox
-      const cb = event.target.closest('.cb');
-      if (cb) cb.className = 'cb' + (!isSel ? ' checked' : '');
-      // Update big cat header checkbox
-      const headCb = obigCat.querySelector('.obig-head .cb');
-      if (headCb) headCb.className = 'cb' + (!isSel ? ' checked' : '');
-      // Auto-collapse
-      const body = obigCat.querySelector('.obig-body');
-      const arrow = obigCat.querySelector('.obig-arrow');
-      if (body) body.classList.remove('open');
-      if (arrow) arrow.classList.remove('open');
+  }else{delete appData.wishes[smallCat];}
+  // Auto-collapse if only 1 small cat in this bigCat
+  const smallCount=(bigCat!=='自定义'&&HIERARCHY[bigCat])?Object.keys(HIERARCHY[bigCat]).length:1;
+  if(smallCount===1){
+    // Find the obig-cat container from the clicked element
+    const obigEl=event.target.closest('.obig-cat');
+    if(obigEl){
+      const cb=event.target.closest('.cb');
+      if(cb)cb.className='cb'+(!isSel?' checked':'');
+      const headCb=obigEl.querySelector('.obig-head .cb');
+      if(headCb)headCb.className='cb'+(!isSel?' checked':'');
+      const body=obigEl.querySelector('.obig-body');
+      const arrow=obigEl.querySelector('.obig-arrow');
+      if(body)body.classList.remove('open');
+      if(arrow)arrow.classList.remove('open');
     }
     saveData();
-    updateSelectAllByPrefix(prefix);
-    updateInfoByPrefix(prefix);
-  } else {
+    if(prefix==='ob'){updateObSelectAll();updateObInfo();}
+    else{updateRsSelectAll();updateRsInfo();}
+  }else{
     refreshCatList(prefix);
   }
 }
-function updateSelectAllByPrefix(prefix) {
-  if (prefix === 'ob') updateObSelectAll();
-  else if (prefix === 'rs') updateRsSelectAll();
-}
-function updateInfoByPrefix(prefix) {
-  if (prefix === 'ob') updateObInfo();
-  else if (prefix === 'rs') updateRsInfo();
-}
-function selectAllCats(prefix) {
-  for (let b in HIERARCHY) for (let s in HIERARCHY[b]) {
-    appData.selectedSmallCats[s] = true;
-    if (!appData.wishes[s]) appData.wishes[s] = [...HIERARCHY[b][s]];
-  }
+function selectAllCats(prefix){
+  for(let b in HIERARCHY)for(let s in HIERARCHY[b]){appData.selectedSmallCats[s]=true;if(!appData.wishes[s])appData.wishes[s]=[...HIERARCHY[b][s]];}
   refreshCatList(prefix);
 }
-function deselectAllCats(prefix) {
-  appData.selectedSmallCats = {}; appData.wishes = {};
-  refreshCatList(prefix);
-}
-function refreshCatList(prefix) {
-  if (prefix === 'ob') { renderObCategoryList(); }
-  else if (prefix === 'rs') { renderRsCategoryList(); }
+function deselectAllCats(prefix){appData.selectedSmallCats={};appData.wishes={};refreshCatList(prefix);}
+function refreshCatList(prefix){
+  if(prefix==='ob')renderObCategoryList();
+  else renderRsCategoryList();
 }
 
-// Custom wish in onboard
-function obAddCustom() {
-  const inp = document.getElementById('obCustomInput'), t = inp.value.trim();
-  if (!t) return;
-  addCustomWish(t);
-  inp.value = '';
-  renderObCategoryList();
-  showToast('已添加 ✨');
+// Custom wish in onboard/reselect
+function obAddCustom(){
+  const inp=document.getElementById('obCustomInput'),t=inp.value.trim();if(!t)return;
+  addCustomWish(t);inp.value='';renderObCategoryList();showToast('已添加 ✨');
 }
-
-function addCustomWish(text) {
-  // Try to match a category from text
-  let cat = null;
-  for (let s of ALL_SMALL_CATS) { if (text.includes(s)) { cat = s; break; } }
-  if (!cat) {
-    // Find best matching bigCat
-    for (let b in HIERARCHY) {
-      for (let s in HIERARCHY[b]) {
-        for (let w of HIERARCHY[b][s]) {
-          // Simple keyword matching
-          const keywords = w.replace(/[去参观看一次体验学做参加完成挑战]/g, '').substring(0, 4);
-          if (text.includes(keywords) && keywords.length >= 2) { cat = s; break; }
-        }
-        if (cat) break;
-      }
-      if (cat) break;
-    }
-  }
-  if (!cat) cat = '自我成长'; // default
-  if (!appData.wishes[cat]) { appData.wishes[cat] = []; appData.customCats = appData.customCats || []; if (!appData.customCats.includes(cat)) appData.customCats.push(cat); }
+function rsAddCustom(){
+  const inp=document.getElementById('rsCustomInput'),t=inp.value.trim();if(!t)return;
+  addCustomWish(t);inp.value='';renderRsCategoryList();showToast('已添加 ✨');
+}
+function addCustomWish(text){
+  let cat=null;
+  for(let s of ALL_SMALL_CATS){if(text.includes(s)){cat=s;break;}}
+  if(!cat)cat='自我成长';
+  if(!appData.wishes[cat]){appData.wishes[cat]=[];appData.customCats=appData.customCats||[];if(!appData.customCats.includes(cat))appData.customCats.push(cat);}
   appData.wishes[cat].push(text);
-  appData.selectedSmallCats[cat] = true;
-  // timestamp
-  appData.wishTimestamps[cat + '::' + text] = Date.now();
+  appData.selectedSmallCats[cat]=true;
+  appData.wishTimestamps[cat+'::'+text]=Date.now();
   saveData();
 }
 
-// Finish onboard
-function finishOnboard() {
-  appData.onboarded = true;
+function finishOnboard(){
+  appData.onboarded=true;
+  // Init card order
+  appData.cardOrder=Object.keys(appData.wishes);
   saveData();
-  document.getElementById('bottomNav').style.display = 'flex';
-  switchPage('pageHome');
-  showToast('欢迎 ' + appData.ownerName + ' 🎉');
+  document.getElementById('bottomNav').style.display='flex';
+  switchPage('pageHome');showToast('欢迎 '+appData.ownerName+' 🎉');
 }
 
-// ==========================================
-// HOME PAGE
-// ==========================================
-function renderHome() {
-  if (!appData) return;
-  document.getElementById('homeTitle').textContent = '🌟 ' + appData.ownerName + '的心愿清单';
-  renderHomeStats();
-  renderFilterBar();
-  renderWishList();
+// ========== HOME ==========
+function renderHome(){
+  if(!appData)return;
+  document.getElementById('homeTitle').textContent='🌟 '+appData.ownerName+'的心愿清单';
+  renderHomeStats();renderFilterBar();renderWishList();
 }
 
-function renderHomeStats() {
-  const s = getStats();
-  document.getElementById('homeStats').innerHTML = `
+function renderHomeStats(){
+  const s=getStats();
+  document.getElementById('homeStats').innerHTML=`
     <div class="home-stat" onclick="filterBy('all')"><div class="num">${s.total}</div><div class="label">全部心愿</div></div>
     <div class="home-stat green" onclick="filterBy('done')"><div class="num">${s.done}</div><div class="label">已实现</div></div>
-    <div class="home-stat" onclick="filterBy('undone')"><div class="num">${s.total - s.done}</div><div class="label">进行中</div></div>
+    <div class="home-stat" onclick="filterBy('undone')"><div class="num">${s.total-s.done}</div><div class="label">进行中</div></div>
     <div class="home-stat" onclick="filterBy('done')"><div class="num">${s.pct}%</div><div class="label">完成率</div></div>`;
 }
 
-function renderFilterBar() {
-  const el = document.getElementById('filterBar');
-  // Get all small cats that have wishes
-  const cats = [];
-  for (let cat in appData.wishes) { if (appData.wishes[cat] && appData.wishes[cat].length > 0) cats.push(cat); }
-  let html = `<div class="filter-chip ${currentFilter==='all'?'active':''}" onclick="filterBy('all')">全部</div>`;
-  html += `<div class="filter-chip ${currentFilter==='undone'?'active':''}" onclick="filterBy('undone')">进行中</div>`;
-  html += `<div class="filter-chip ${currentFilter==='done'?'active':''}" onclick="filterBy('done')">已实现</div>`;
-  cats.forEach(c => {
-    html += `<div class="filter-chip ${currentFilter===c?'active':''}" onclick="filterBy('${c.replace(/'/g,"\\'")}')">${c}</div>`;
+function renderFilterBar(){
+  const el=document.getElementById('filterBar');
+  const cats=[];for(let cat in appData.wishes){if(appData.wishes[cat]&&appData.wishes[cat].length>0)cats.push(cat);}
+  let html=`<div class="filter-chip ${currentFilter==='all'?'active':''}" onclick="filterBy('all')">全部</div>`;
+  html+=`<div class="filter-chip ${currentFilter==='undone'?'active':''}" onclick="filterBy('undone')">进行中</div>`;
+  html+=`<div class="filter-chip ${currentFilter==='done'?'active':''}" onclick="filterBy('done')">已实现</div>`;
+  // Category chips: NOT clickable, just for display
+  cats.forEach(c=>{
+    html+=`<div class="filter-chip disabled">${c}</div>`;
   });
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
 
-function filterBy(f) { currentFilter = f; renderFilterBar(); renderWishList(); }
+function filterBy(f){currentFilter=f;renderFilterBar();renderWishList();}
 
-function renderWishList() {
-  const el = document.getElementById('wishMasonry');
-  // Group wishes by small category
-  const catGroups = {};
-  for (let cat in appData.wishes) {
-    const wishes = appData.wishes[cat];
-    if (!wishes || wishes.length === 0) continue;
-    const items = wishes.map(w => {
-      const key = cat + '::' + w;
-      return { cat, text: w, done: !!appData.completed[key], ts: appData.wishTimestamps[key] || 0, doneTs: appData.completed[key] || 0, key };
+function renderWishList(){
+  const el=document.getElementById('wishMasonry');
+  const catGroups={};
+  for(let cat in appData.wishes){
+    const wishes=appData.wishes[cat];if(!wishes||wishes.length===0)continue;
+    const items=wishes.map(w=>{
+      const key=cat+'::'+w;
+      return{cat,text:w,done:!!appData.completed[key],ts:appData.wishTimestamps[key]||0,doneTs:appData.completed[key]||0,key};
     });
-    // Apply filter
-    let filtered = items;
-    if (currentFilter === 'done') filtered = items.filter(w => w.done);
-    else if (currentFilter === 'undone') filtered = items.filter(w => !w.done);
-    if (filtered.length > 0) catGroups[cat] = filtered;
+    let filtered=items;
+    if(currentFilter==='done')filtered=items.filter(w=>w.done);
+    else if(currentFilter==='undone')filtered=items.filter(w=>!w.done);
+    if(filtered.length>0)catGroups[cat]=filtered;
   }
-
-  if (Object.keys(catGroups).length === 0) {
-    el.innerHTML = '<div class="empty-state" style="column-span:all"><div class="emoji">🌟</div><div class="msg">' + (currentFilter === 'all' ? '还没有心愿，去添加吧' : '暂无匹配的心愿') + '</div></div>';
+  if(Object.keys(catGroups).length===0){
+    el.innerHTML='<div class="empty-state" style="column-span:all"><div class="emoji">🌟</div><div class="msg">'+(currentFilter==='all'?'还没有心愿，去添加吧':'暂无匹配的心愿')+'</div></div>';
     return;
   }
-
-  // Find bigCat for each smallCat to get icon/color
-  function getBigCatInfo(smallCat) {
-    for (let b in HIERARCHY) { if (HIERARCHY[b][smallCat]) return { bigCat: b, icon: CAT_ICONS[b] || '📌', color: catColorMap[b] || '#FF6B6B' }; }
-    return { bigCat: '自定义', icon: '✨', color: '#FF6B6B' };
+  function getBigCatInfo(smallCat){
+    for(let b in HIERARCHY){if(HIERARCHY[b][smallCat])return{bigCat:b,icon:CAT_ICONS[b]||'📌',color:catColorMap[b]||'#FF6B6B'};}
+    return{bigCat:'自定义',icon:'✨',color:'#FF6B6B'};
   }
 
-  let html = '';
-  for (let cat in catGroups) {
-    const items = catGroups[cat];
-    const info = getBigCatInfo(cat);
-    const doneCount = items.filter(w => w.done).length;
-    const totalCount = items.length;
-    const previewCount = 5;
-    const isExpanded = expandedCat === cat;
+  // Use cardOrder if available, fallback to object keys
+  const orderedCats=getOrderedCats(Object.keys(catGroups));
 
-    // Sort: undone first, done last
-    const sorted = [...items].sort((a,b) => {
-      if (a.done !== b.done) return a.done ? 1 : -1;
-      return b.ts - a.ts;
-    });
+  let html='';
+  for(let cat of orderedCats){
+    if(!catGroups[cat])continue;
+    const items=catGroups[cat];
+    const info=getBigCatInfo(cat);
+    const doneCount=items.filter(w=>w.done).length;
+    const totalCount=items.length;
+    const previewCount=5;
+    const isExpanded=expandedCat===cat;
+    const sorted=[...items].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;return b.ts-a.ts;});
+    const displayItems=isExpanded?sorted:sorted.slice(0,previewCount);
 
-    const displayItems = isExpanded ? sorted : sorted.slice(0, previewCount);
-
-    html += `<div class="wish-card ${isExpanded ? 'expanded' : ''}" data-cat="${cat}">
-      <div class="wc-header" style="cursor:pointer" onclick="${isExpanded ? '' : 'expandCat(\"' + esc(cat) + '\")'}">
+    html+=`<div class="wish-card${isExpanded?' expanded':''}" data-cat="${cat}">
+      <div class="wc-header" onclick="expandCat('${esc(cat)}')">
         <div class="wc-icon" style="background:${info.color}22;color:${info.color}">${info.icon}</div>
         <div class="wc-title">${cat}</div>
         <div class="wc-count">${doneCount}/${totalCount}</div>
       </div>
       <div class="wc-body">`;
-    displayItems.forEach(w => {
-      html += `<div class="wc-item">
-        <div class="wc-cb ${w.done?'checked':''}" onclick="toggleWish('${esc(w.key)}')"></div>
-        <span class="wc-text ${w.done?'done':''}" onclick="openEditWish('${esc(w.key)}')">${w.text}</span>
+    displayItems.forEach(w=>{
+      html+=`<div class="wc-item">
+        <div class="wc-cb${w.done?' checked':''}" onclick="event.stopPropagation();toggleWish('${esc(w.key)}')"></div>
+        <span class="wc-text${w.done?' done':''}" onclick="event.stopPropagation();openEditWish('${esc(w.key)}')">${w.text}</span>
       </div>`;
     });
-    html += `</div>`;
-    if (totalCount > previewCount || isExpanded) {
-      html += `<div class="wc-footer"><button class="wc-toggle" onclick="${isExpanded ? 'collapseCat()' : 'expandCat(\"' + esc(cat) + '\")'}">${isExpanded ? '收起 ↑' : '查看全部 (' + totalCount + '条) ↓'}</button></div>`;
+    html+='</div>';
+    if(totalCount>previewCount||isExpanded){
+      html+=`<div class="wc-footer"><button class="wc-toggle" onclick="event.stopPropagation();${isExpanded?"collapseCat()":"expandCat('"+esc(cat)+"')"}"}">${isExpanded?'收起 ↑':'查看全部 ('+totalCount+'条) ↓'}</button></div>`;
     }
-    html += `</div>`;
+    html+='</div>';
   }
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
 
-let expandedCat = null;
-function expandCat(cat) { expandedCat = cat; renderWishList(); }
-function collapseCat() { expandedCat = null; renderWishList(); }
-
-function esc(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
-
-function formatDuration(ts) {
-  if (!ts) return '未知';
-  const diff = Date.now() - ts;
-  const mins = Math.floor(diff / 60000);
-  if (mins < 1) return '刚刚';
-  if (mins < 60) return mins + '分钟前';
-  const hours = Math.floor(mins / 60);
-  if (hours < 24) return hours + '小时前';
-  const days = Math.floor(hours / 24);
-  if (days < 30) return days + '天前';
-  const months = Math.floor(days / 30);
-  if (months < 12) return months + '个月前';
-  return Math.floor(months / 12) + '年前';
+function getOrderedCats(activeCats){
+  if(!appData.cardOrder||appData.cardOrder.length===0)return activeCats;
+  const ordered=[];
+  // First add from cardOrder that are in activeCats
+  for(let c of appData.cardOrder){if(activeCats.includes(c))ordered.push(c);}
+  // Then add any new cats not in cardOrder
+  for(let c of activeCats){if(!ordered.includes(c))ordered.push(c);}
+  return ordered;
 }
 
-function toggleWish(key) {
-  const unesc = key.replace(/\\'/g, "'");
-  if (appData.completed[unesc]) {
-    delete appData.completed[unesc];
-  } else {
-    appData.completed[unesc] = Date.now();
-  }
-  saveData(); renderHome();
-}
+function expandCat(cat){expandedCat=cat;renderWishList();}
+function collapseCat(){expandedCat=null;renderWishList();}
 
-function openEditWish(key) {
-  const unesc = key.replace(/\\'/g, "'");
-  editingWishKey = unesc;
-  const parts = unesc.split('::');
-  const cat = parts[0], text = parts.slice(1).join('::');
-  document.getElementById('editWishInput').value = text;
+function esc(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+
+function toggleWish(key){
+  const unesc=key.replace(/\\'/g,"'");
+  if(appData.completed[unesc])delete appData.completed[unesc];
+  else appData.completed[unesc]=Date.now();
+  saveData();renderHome();
+}
+function openEditWish(key){
+  const unesc=key.replace(/\\'/g,"'");editingWishKey=unesc;
+  const parts=unesc.split('::');document.getElementById('editWishInput').value=parts.slice(1).join('::');
   document.getElementById('editModal').classList.add('show');
 }
-
-function closeEditModal() { document.getElementById('editModal').classList.remove('show'); editingWishKey = null; }
-
-function saveEditWish() {
-  if (!editingWishKey) return;
-  const newText = document.getElementById('editWishInput').value.trim();
-  if (!newText) { showToast('请输入内容'); return; }
-  const parts = editingWishKey.split('::');
-  const cat = parts[0], oldText = parts.slice(1).join('::');
-  const wishes = appData.wishes[cat];
-  if (wishes) {
-    const idx = wishes.indexOf(oldText);
-    if (idx >= 0) {
-      wishes[idx] = newText;
-      // Update keys
-      const newKey = cat + '::' + newText;
-      if (appData.completed[editingWishKey]) { appData.completed[newKey] = appData.completed[editingWishKey]; delete appData.completed[editingWishKey]; }
-      if (appData.wishTimestamps[editingWishKey]) { appData.wishTimestamps[newKey] = appData.wishTimestamps[editingWishKey]; delete appData.wishTimestamps[editingWishKey]; }
-    }
-  }
-  saveData(); closeEditModal(); renderHome(); showToast('已更新');
+function closeEditModal(){document.getElementById('editModal').classList.remove('show');editingWishKey=null;}
+function saveEditWish(){
+  if(!editingWishKey)return;
+  const newText=document.getElementById('editWishInput').value.trim();
+  if(!newText){showToast('请输入内容');return;}
+  const parts=editingWishKey.split('::');const cat=parts[0],oldText=parts.slice(1).join('::');
+  const wishes=appData.wishes[cat];
+  if(wishes){const idx=wishes.indexOf(oldText);if(idx>=0){
+    wishes[idx]=newText;const newKey=cat+'::'+newText;
+    if(appData.completed[editingWishKey]){appData.completed[newKey]=appData.completed[editingWishKey];delete appData.completed[editingWishKey];}
+    if(appData.wishTimestamps[editingWishKey]){appData.wishTimestamps[newKey]=appData.wishTimestamps[editingWishKey];delete appData.wishTimestamps[editingWishKey];}
+  }}
+  saveData();closeEditModal();renderHome();showToast('已更新');
 }
 
-// Add from home bottom bar
-function addWishFromHome() {
-  const inp = document.getElementById('homeAddInput'), t = inp.value.trim();
-  if (!t) return;
-  addCustomWish(t);
-  inp.value = '';
-  renderHome();
-  showToast('已添加 ✨');
-}
-document.getElementById('homeAddInput').addEventListener('keydown', e => { if (e.key === 'Enter') addWishFromHome(); });
-
-// ==========================================
-// ADD PAGE
-// ==========================================
-function renderAddPage() {
-  const sel = document.getElementById('addCatSelector');
-  const activeCats = [];
-  for (let cat in appData.wishes) { if (appData.wishes[cat] && appData.wishes[cat].length > 0) activeCats.push(cat); }
-  let html = '';
-  activeCats.forEach(s => {
-    const active = addSelectedCat === s ? 'active' : '';
-    html += `<div class="cat-chip ${active}" onclick="selectAddCat('${s.replace(/'/g,"\\'")}')">${s}</div>`;
+// ========== ADD PAGE ==========
+function renderAddPage(){
+  const sel=document.getElementById('addCatSelector');
+  // Only show categories the user has selected
+  const activeCats=[];
+  for(let cat in appData.wishes){if(appData.wishes[cat]&&appData.wishes[cat].length>0&&appData.selectedSmallCats[cat])activeCats.push(cat);}
+  let html='';
+  activeCats.forEach(s=>{
+    const active=addSelectedCat===s?'active':'';
+    html+=`<div class="cat-chip ${active}" onclick="selectAddCat('${s.replace(/'/g,"\\'")}')">${s}</div>`;
   });
-  sel.innerHTML = html;
+  sel.innerHTML=html;
   renderRecentList();
 }
-
-function selectAddCat(cat) { addSelectedCat = cat; renderAddPage(); }
-
-function addWishFromAddPage() {
-  const inp = document.getElementById('addWishInput'), t = inp.value.trim();
-  if (!t) { showToast('请输入心愿内容'); return; }
-  let cat = addSelectedCat;
-  if (!cat) {
-    for (let s of ALL_SMALL_CATS) { if (t.includes(s)) { cat = s; break; } }
+function selectAddCat(cat){addSelectedCat=cat;renderAddPage();}
+function addWishFromAddPage(){
+  const inp=document.getElementById('addWishInput'),t=inp.value.trim();
+  if(!t){showToast('请输入心愿内容');return;}
+  // Must select a category that's already in the user's list
+  let cat=addSelectedCat;
+  if(!cat){
+    // Try auto-match from text
+    for(let s of ALL_SMALL_CATS){if(appData.selectedSmallCats[s]&&t.includes(s)){cat=s;break;}}
   }
-  if (!cat) cat = '自我成长';
-  if (!appData.wishes[cat]) { appData.wishes[cat] = []; appData.customCats = appData.customCats || []; if (!appData.customCats.includes(cat)) appData.customCats.push(cat); }
+  if(!cat){
+    // Pick first selected cat
+    for(let s in appData.selectedSmallCats){if(appData.selectedSmallCats[s]){cat=s;break;}}
+  }
+  if(!cat){showToast('请先选择心愿分类');return;}
+  if(!appData.wishes[cat])appData.wishes[cat]=[];
   appData.wishes[cat].push(t);
-  appData.wishTimestamps[cat + '::' + t] = Date.now();
-  appData.selectedSmallCats[cat] = true;
-  inp.value = ''; saveData(); renderAddPage(); renderHome();
-  showToast('心愿已添加到「' + cat + '」✨');
+  appData.wishTimestamps[cat+'::'+t]=Date.now();
+  inp.value='';saveData();renderAddPage();renderHome();
+  showToast('心愿已添加到「'+cat+'」✨');
+}
+function renderRecentList(){
+  const el=document.getElementById('recentList');if(!appData)return;
+  let items=[];
+  for(let cat in appData.wishes)appData.wishes[cat].forEach(w=>{const key=cat+'::'+w;items.push({cat,text:w,ts:appData.wishTimestamps[key]||0});});
+  items.sort((a,b)=>b.ts-a.ts);const recent=items.slice(0,10);
+  if(!recent.length){el.innerHTML='';return;}
+  let html='<h3 style="font-size:14px;font-weight:600;margin-bottom:8px">最近添加</h3>';
+  recent.forEach(r=>{html+=`<div class="recent-item"><span class="recent-cat">${r.cat}</span><span class="recent-text">${r.text}</span></div>`;});
+  el.innerHTML=html;
 }
 
-function renderRecentList() {
-  const el = document.getElementById('recentList');
-  if (!appData) return;
-  let items = [];
-  for (let cat in appData.wishes) {
-    appData.wishes[cat].forEach((w, i) => {
-      const key = cat + '::' + w;
-      items.push({ cat, text: w, ts: appData.wishTimestamps[key] || 0 });
-    });
-  }
-  items.sort((a,b) => b.ts - a.ts);
-  const recent = items.slice(0, 10);
-  if (!recent.length) { el.innerHTML = ''; return; }
-  let html = '<h3 style="font-size:14px;font-weight:600;margin-bottom:8px">最近添加</h3>';
-  recent.forEach(r => {
-    html += `<div class="recent-item"><span class="recent-cat">${r.cat}</span><span class="recent-text">${r.text}</span></div>`;
-  });
-  el.innerHTML = html;
-}
-
-// ==========================================
-// SETTINGS PAGE
-// ==========================================
-function renderSettings() {
-  if (!appData) return;
-  const s = getStats();
-  document.getElementById('settingsAvatar').textContent = appData.ownerName[0];
-  document.getElementById('settingsName').textContent = appData.ownerName;
-  document.getElementById('settingsMenu').innerHTML = `
+// ========== SETTINGS ==========
+function renderSettings(){
+  if(!appData)return;
+  document.getElementById('settingsAvatar').textContent=appData.ownerName[0];
+  document.getElementById('settingsName').textContent=appData.ownerName;
+  document.getElementById('settingsMenu').innerHTML=`
     <div class="settings-item" onclick="openNameModal()"><div class="settings-icon">✏️</div><div class="settings-text">修改名字</div><div class="settings-arrow">›</div></div>
     <div class="settings-item" onclick="openReselect()"><div class="settings-icon">📋</div><div class="settings-text">重选心愿</div><div class="settings-arrow">›</div></div>
     <div class="settings-item" onclick="resetApp()"><div class="settings-icon">🔄</div><div class="settings-text">重新自定义首页</div><div class="settings-arrow">›</div></div>
     <div class="settings-item" onclick="exportData()"><div class="settings-icon">📤</div><div class="settings-text">导出数据</div><div class="settings-arrow">›</div></div>
     <div class="settings-item" onclick="clearAllData()"><div class="settings-icon">🗑️</div><div class="settings-text" style="color:#FF6B6B">清空所有数据</div><div class="settings-arrow">›</div></div>`;
 }
+function openNameModal(){document.getElementById('newNameInput').value=appData.ownerName;document.getElementById('nameModal').classList.add('show');}
+function closeNameModal(){document.getElementById('nameModal').classList.remove('show');}
+function saveNewName(){const n=document.getElementById('newNameInput').value.trim();if(!n){showToast('请输入名字');return;}appData.ownerName=n;saveData();closeNameModal();renderHome();renderSettings();showToast('名字已更新');}
+function exportData(){const blob=new Blob([JSON.stringify(appData,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='心愿清单_'+appData.ownerName+'.json';a.click();showToast('导出成功');}
+function clearAllData(){if(!confirm('确定清空所有数据？此操作不可恢复！'))return;localStorage.removeItem('wishList_v10');appData=null;document.getElementById('bottomNav').style.display='none';showPage('pageOnboard1');document.getElementById('nameInput').value='';showToast('数据已清空');}
+function resetApp(){if(!confirm('重新自定义将回到初始选择页面，已选心愿和完成记录会保留'))return;appData.onboarded=false;saveData();document.getElementById('bottomNav').style.display='none';showPage('pageOnboard1');document.getElementById('nameInput').value=appData.ownerName;showToast('请重新设置');}
 
-function openNameModal() { document.getElementById('newNameInput').value = appData.ownerName; document.getElementById('nameModal').classList.add('show'); }
-function closeNameModal() { document.getElementById('nameModal').classList.remove('show'); }
-function saveNewName() {
-  const n = document.getElementById('newNameInput').value.trim();
-  if (!n) { showToast('请输入名字'); return; }
-  appData.ownerName = n; saveData(); closeNameModal(); renderHome(); renderSettings(); showToast('名字已更新');
-}
-
-function exportData() {
-  const blob = new Blob([JSON.stringify(appData, null, 2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '心愿清单_' + appData.ownerName + '.json'; a.click();
-  showToast('导出成功');
-}
-function clearAllData() {
-  if (!confirm('确定清空所有数据？此操作不可恢复！')) return;
-  localStorage.removeItem('wishList_v10');
-  appData = null;
-  document.getElementById('bottomNav').style.display = 'none';
-  showPage('pageOnboard1');
-  document.getElementById('nameInput').value = '';
-  showToast('数据已清空');
-}
-function resetApp() {
-  if (!confirm('重新自定义将回到初始选择页面，已选心愿和完成记录会保留')) return;
-  appData.onboarded = false;
-  saveData();
-  document.getElementById('bottomNav').style.display = 'none';
-  showPage('pageOnboard1');
-  document.getElementById('nameInput').value = appData.ownerName;
-  showToast('请重新设置');
+// ========== RE-SELECT ==========
+function openReselect(){showPage('pageReselect');renderRsCategoryList();}
+function closeReselect(){switchPage('pageHome');}
+function renderRsCategoryList(){document.getElementById('rsCategoryList').innerHTML=buildCategoryListHTML('rs');updateRsSelectAll();updateRsInfo();}
+function finishReselect(){
+  // Update card order with any new cats
+  const currentCats=Object.keys(appData.wishes);
+  if(!appData.cardOrder)appData.cardOrder=[];
+  for(let c of currentCats){if(!appData.cardOrder.includes(c))appData.cardOrder.push(c);}
+  saveData();switchPage('pageHome');showToast('已更新 ✨');
 }
 
-// ==========================================
-// RE-SELECT PAGE
-// ==========================================
-function openReselect() {
-  showPage('pageReselect');
-  renderRsCategoryList();
-}
-function closeReselect() { switchPage('pageHome'); }
-
-function renderRsCategoryList() {
-  const el = document.getElementById('rsCategoryList');
-  el.innerHTML = buildCategoryListHTML('rs');
-  updateRsSelectAll();
-  updateRsInfo();
-}
-
-function rsToggleBigCat(bigCat) { toggleBigCatSelect(bigCat, 'rs'); }
-function rsToggleSmallCat(bigCat, smallCat) { toggleSmallCatSelect(bigCat, smallCat, 'rs'); }
-function rsSelectAll() { selectAllCats('rs'); }
-function rsDeselectAll() { deselectAllCats('rs'); }
-function rsToggleSelectAll() {
-  const all = []; for (let b in HIERARCHY) for (let s in HIERARCHY[b]) all.push(s);
-  all.every(s => appData.selectedSmallCats[s]) ? rsDeselectAll() : rsSelectAll();
-}
-function updateRsSelectAll() {
-  const cb = document.getElementById('rsSelectAllCb'); if (!cb) return;
-  const all = []; for (let b in HIERARCHY) for (let s in HIERARCHY[b]) all.push(s);
-  const allSel = all.length > 0 && all.every(s => appData.selectedSmallCats[s]);
-  const some = all.some(s => appData.selectedSmallCats[s]);
-  cb.className = 'cb' + (allSel ? ' checked' : some ? ' partial' : '');
-}
-function updateRsInfo() {
-  let count = 0; for (let s in appData.selectedSmallCats) if (appData.selectedSmallCats[s]) count++;
-  const info = document.getElementById('rsInfo');
-  if (info) info.textContent = '已选 ' + count + ' 个分类';
-}
-function rsAddCustom() {
-  const inp = document.getElementById('rsCustomInput'), t = inp.value.trim();
-  if (!t) return;
-  addCustomWish(t);
-  inp.value = '';
-  renderRsCategoryList();
-  showToast('已添加 ✨');
-}
-function finishReselect() {
-  saveData();
-  switchPage('pageHome');
-  showToast('已更新 ✨');
-}
-
-// ==========================================
-// SHARE PAGE
-// ==========================================
-function renderShare() {
-  if (!appData) return;
-  const s = getStats();
-  const el = document.getElementById('sharePreview');
-  el.innerHTML = `
-    <div class="share-img" id="shareCanvas">
-      <div class="name">${appData.ownerName}的心愿清单</div>
-      <div class="stats">共 ${s.total} 个心愿 · 已实现 ${s.done} 个 · 完成率 ${s.pct}%</div>
-      <div class="slogan">人生30000天，慢慢来，不设限 🌟</div>
+// ========== SHARE ==========
+function renderShare(){
+  if(!appData)return;
+  const s=getStats();
+  const slogan=SLOGANS[Math.floor(Math.random()*SLOGANS.length)].replace('XXX',appData.ownerName);
+  const el=document.getElementById('sharePreview');
+  el.innerHTML=`
+    <div class="share-canvas" id="shareCanvas">
+      <div class="s-name">${appData.ownerName}的心愿清单</div>
+      <div class="s-stats">共 ${s.total} 个心愿 · 已实现 ${s.done} 个 · 完成率 ${s.pct}%</div>
+      <div class="s-slogan">${slogan}</div>
+      <div class="s-qr" id="shareQr"></div>
     </div>
     <div class="share-actions">
-      <button class="share-btn secondary" onclick="shareCopy()">复制文字</button>
-      <button class="share-btn primary" onclick="shareScreenshot()">保存图片</button>
+      <button class="share-btn primary" onclick="shareSaveImg()">保存图片</button>
     </div>`;
+  // Generate QR code
+  try{QRCode.toCanvas(document.createElement('canvas'),SHARE_URL,{width:100,margin:1},function(err,canvas){
+    if(!err){const qrEl=document.getElementById('shareQr');qrEl.innerHTML='';qrEl.appendChild(canvas);}
+  });}catch(e){console.log('QR gen error',e);}
 }
 
-function shareCopy() {
-  const s = getStats();
-  const text = `${appData.ownerName}的心愿清单\n共 ${s.total} 个心愿 · 已实现 ${s.done} 个 · 完成率 ${s.pct}%\n\n🌟 人生30000天心愿清单`;
-  navigator.clipboard.writeText(text).then(() => showToast('已复制到剪贴板')).catch(() => showToast('复制失败，请手动复制'));
-}
-
-function shareScreenshot() {
-  // Use html2canvas if available, otherwise fallback
-  const target = document.getElementById('shareCanvas');
-  if (typeof html2canvas !== 'undefined') {
-    html2canvas(target, {backgroundColor:null,scale:2}).then(canvas => {
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = '心愿清单_' + appData.ownerName + '.png';
-      a.click();
-      showToast('图片已保存');
-    }).catch(() => showToast('保存失败'));
-  } else {
-    // Load html2canvas dynamically
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-    script.onload = () => shareScreenshot();
-    script.onerror = () => showToast('加载截图库失败');
+function shareSaveImg(){
+  const target=document.getElementById('shareCanvas');
+  if(typeof html2canvas!=='undefined'){
+    html2canvas(target,{backgroundColor:null,scale:2}).then(canvas=>{
+      const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='心愿清单_'+appData.ownerName+'.png';a.click();showToast('图片已保存');
+    }).catch(()=>showToast('保存失败'));
+  }else{
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload=()=>shareSaveImg();
+    script.onerror=()=>showToast('加载截图库失败');
     document.head.appendChild(script);
   }
 }
 
-// ==========================================
-// UTILS
-// ==========================================
-function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
-document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); }); });
+// ========== UTILS ==========
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});});
 
 init();
 </script>
