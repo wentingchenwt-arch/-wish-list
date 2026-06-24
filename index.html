@@ -77,7 +77,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .filter-bar::-webkit-scrollbar{display:none}
 .filter-chip{white-space:nowrap;padding:6px 14px;border-radius:18px;font-size:12px;font-weight:500;background:var(--card);color:var(--text2);border:1.5px solid var(--border);cursor:pointer;flex-shrink:0;transition:all .15s}
 .filter-chip.active{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
-.filter-chip.disabled{cursor:default;opacity:.7}
+.filter-chip.bigcat{background:#F0F0F0;color:var(--text2);border-color:transparent}
+.filter-chip.bigcat.active{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
 
 .wish-masonry{column-count:2;column-gap:10px;padding:0 16px 80px}
 .wish-card{break-inside:avoid;margin-bottom:10px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s}
@@ -97,13 +98,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .wc-footer{padding:6px 14px 10px;text-align:center}
 .wc-toggle{font-size:11px;color:var(--primary);background:none;border:none;cursor:pointer;font-weight:500}
 
-.wish-card.expanded{position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;margin:0;border-radius:0;overflow-y:auto;padding-bottom:80px}
-.wish-card.expanded .wc-header{position:sticky;top:0;background:var(--card);z-index:1;padding:14px;border-bottom:1px solid var(--border);cursor:pointer}
+.wish-card.expanded{column-span:all;margin-bottom:16px}
 .wish-card.expanded .wc-body{padding:4px 14px 6px}
 .wish-card.expanded .wc-item{padding:10px 4px}
 .wish-card.expanded .wc-text{font-size:14px}
-.wish-card.expanded .wc-cb{width:22px;height:22px}
-.wish-card.expanded .wc-cb.checked::after{font-size:12px}
 
 .cb{width:20px;height:20px;border-radius:50%;border:2px solid var(--text3);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
 .cb.checked{background:var(--primary);border-color:var(--primary)}
@@ -141,11 +139,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 
 /* SHARE */
 .share-preview{margin:16px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);text-align:center}
-.share-canvas{width:100%;background:linear-gradient(135deg,#FF6B6B,#FF8E8E);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:32px 20px;position:relative}
-.share-canvas .s-name{font-size:22px;font-weight:700;margin-bottom:6px}
-.share-canvas .s-stats{font-size:14px;opacity:.85;margin-bottom:16px}
-.share-canvas .s-slogan{font-size:12px;opacity:.8;margin-bottom:16px}
-.share-canvas .s-qr{background:#fff;padding:8px;border-radius:8px;display:inline-block}
+.share-canvas{width:100%;max-width:375px;margin:0 auto;aspect-ratio:9/16;background:linear-gradient(135deg,#FF6B6B,#FF8E8E);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:40px 24px;position:relative;border-radius:var(--radius)}
+.share-canvas .s-name{font-size:26px;font-weight:700;margin-bottom:8px}
+.share-canvas .s-stats{font-size:15px;opacity:.85;margin-bottom:20px}
+.share-canvas .s-slogan{font-size:14px;opacity:.85;margin-bottom:24px;line-height:1.5}
+.share-canvas .s-qr{background:#fff;padding:10px;border-radius:10px;display:inline-block}
 .share-canvas .s-qr canvas{display:block}
 .share-actions{padding:16px;display:flex;gap:10px}
 .share-btn{flex:1;padding:12px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
@@ -236,7 +234,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 <div class="page" id="pageAdd">
   <div class="topbar"><h1>✨ 添加心愿</h1></div>
   <div class="add-section">
-    <h3>写下你的心愿</h3>
+    <h3>重新选择心愿</h3>
+    <button class="add-btn" style="background:var(--card);color:var(--primary);border:1.5px solid var(--primary);margin-bottom:20px" onclick="openReselect()">📋 从心愿库中选择</button>
+    <h3>添加自定义心愿</h3>
     <input class="add-input" id="addWishInput" placeholder="比如：去冰岛看一次极光" maxlength="100">
     <h3>选择分类</h3>
     <div class="cat-selector" id="addCatSelector"></div>
@@ -347,7 +347,7 @@ for(let b in HIERARCHY)for(let s in HIERARCHY[b])ALL_SMALL_CATS.push(s);
 const SHARE_URL='https://wentingchenwt-arch.github.io/-wish-list/';
 const SLOGANS=['快来围观XXX的人生心愿清单','开启你的心愿清单','人生不荒废，等你建心愿'];
 
-let appData=null,currentFilter='all',addSelectedCat=null,editingWishKey=null,expandedCat=null;
+let appData=null,currentFilter='all',currentBigCat=null,addSelectedCat=null,editingWishKey=null,expandedCat=null;
 
 function loadData(){const r=localStorage.getItem('wishList_v10');appData=r?JSON.parse(r):null;}
 function saveData(){localStorage.setItem('wishList_v10',JSON.stringify(appData));}
@@ -504,27 +504,22 @@ function toggleSmallCatSelect(bigCat,smallCat,prefix){
       if(!appData.wishes[smallCat])appData.wishes[smallCat]=[...HIERARCHY[bigCat][smallCat]];
     }
   }else{delete appData.wishes[smallCat];}
+  saveData();
   // Auto-collapse if only 1 small cat in this bigCat
   const smallCount=(bigCat!=='自定义'&&HIERARCHY[bigCat])?Object.keys(HIERARCHY[bigCat]).length:1;
   if(smallCount===1){
-    // Find the obig-cat container from the clicked element
-    const obigEl=event.target.closest('.obig-cat');
+    // Close the big cat section
+    const obigEl=event&&event.target?event.target.closest('.obig-cat'):null;
     if(obigEl){
-      const cb=event.target.closest('.cb');
-      if(cb)cb.className='cb'+(!isSel?' checked':'');
-      const headCb=obigEl.querySelector('.obig-head .cb');
-      if(headCb)headCb.className='cb'+(!isSel?' checked':'');
       const body=obigEl.querySelector('.obig-body');
       const arrow=obigEl.querySelector('.obig-arrow');
       if(body)body.classList.remove('open');
       if(arrow)arrow.classList.remove('open');
     }
-    saveData();
-    if(prefix==='ob'){updateObSelectAll();updateObInfo();}
-    else{updateRsSelectAll();updateRsInfo();}
-  }else{
-    refreshCatList(prefix);
   }
+  if(prefix==='ob'){updateObSelectAll();updateObInfo();}
+  else{updateRsSelectAll();updateRsInfo();}
+  refreshCatList(prefix);
 }
 function selectAllCats(prefix){
   for(let b in HIERARCHY)for(let s in HIERARCHY[b]){appData.selectedSmallCats[s]=true;if(!appData.wishes[s])appData.wishes[s]=[...HIERARCHY[b][s]];}
@@ -583,24 +578,44 @@ function renderHomeStats(){
 
 function renderFilterBar(){
   const el=document.getElementById('filterBar');
-  const cats=[];for(let cat in appData.wishes){if(appData.wishes[cat]&&appData.wishes[cat].length>0)cats.push(cat);}
-  let html=`<div class="filter-chip ${currentFilter==='all'?'active':''}" onclick="filterBy('all')">全部</div>`;
-  html+=`<div class="filter-chip ${currentFilter==='undone'?'active':''}" onclick="filterBy('undone')">进行中</div>`;
-  html+=`<div class="filter-chip ${currentFilter==='done'?'active':''}" onclick="filterBy('done')">已实现</div>`;
-  // Category chips: NOT clickable, just for display
-  cats.forEach(c=>{
-    html+=`<div class="filter-chip disabled">${c}</div>`;
+  // Collect active big categories
+  const bigCats=new Set();
+  for(let cat in appData.wishes){
+    if(appData.wishes[cat]&&appData.wishes[cat].length>0){
+      bigCats.add(getBigCatForSmall(cat));
+    }
+  }
+  let html=`<div class="filter-chip ${currentFilter==='all'&&!currentBigCat?'active':''}" onclick="filterBy('all')">全部</div>`;
+  html+=`<div class="filter-chip ${currentFilter==='undone'&&!currentBigCat?'active':''}" onclick="filterBy('undone')">进行中</div>`;
+  html+=`<div class="filter-chip ${currentFilter==='done'&&!currentBigCat?'active':''}" onclick="filterBy('done')">已实现</div>`;
+  // Big category chips: clickable
+  const bigCatArr=Array.from(bigCats);
+  bigCatArr.forEach(bc=>{
+    const icon=CAT_ICONS[bc]||'📌';
+    const isActive=currentBigCat===bc;
+    html+=`<div class="filter-chip bigcat ${isActive?'active':''}" onclick="filterByBigCat('${bc.replace(/'/g,"\\'")}')">${icon} ${bc}</div>`;
   });
   el.innerHTML=html;
 }
 
-function filterBy(f){currentFilter=f;renderFilterBar();renderWishList();}
+function filterBy(f){currentFilter=f;currentBigCat=null;renderFilterBar();renderWishList();}
+function filterByBigCat(bc){currentBigCat=currentBigCat===bc?null:bc;currentFilter='all';renderFilterBar();renderWishList();}
+
+function getBigCatForSmall(smallCat){
+  for(let b in HIERARCHY){if(HIERARCHY[b][smallCat])return b;}
+  return '自定义';
+}
 
 function renderWishList(){
   const el=document.getElementById('wishMasonry');
   const catGroups={};
   for(let cat in appData.wishes){
     const wishes=appData.wishes[cat];if(!wishes||wishes.length===0)continue;
+    // Filter by big category if selected
+    if(currentBigCat){
+      const bc=getBigCatForSmall(cat);
+      if(bc!==currentBigCat)continue;
+    }
     const items=wishes.map(w=>{
       const key=cat+'::'+w;
       return{cat,text:w,done:!!appData.completed[key],ts:appData.wishTimestamps[key]||0,doneTs:appData.completed[key]||0,key};
@@ -614,11 +629,6 @@ function renderWishList(){
     el.innerHTML='<div class="empty-state" style="column-span:all"><div class="emoji">🌟</div><div class="msg">'+(currentFilter==='all'?'还没有心愿，去添加吧':'暂无匹配的心愿')+'</div></div>';
     return;
   }
-  function getBigCatInfo(smallCat){
-    for(let b in HIERARCHY){if(HIERARCHY[b][smallCat])return{bigCat:b,icon:CAT_ICONS[b]||'📌',color:catColorMap[b]||'#FF6B6B'};}
-    return{bigCat:'自定义',icon:'✨',color:'#FF6B6B'};
-  }
-
   // Use cardOrder if available, fallback to object keys
   const orderedCats=getOrderedCats(Object.keys(catGroups));
 
@@ -626,7 +636,9 @@ function renderWishList(){
   for(let cat of orderedCats){
     if(!catGroups[cat])continue;
     const items=catGroups[cat];
-    const info=getBigCatInfo(cat);
+    const bc=getBigCatForSmall(cat);
+    const icon=CAT_ICONS[bc]||'📌';
+    const color=catColorMap[bc]||'#FF6B6B';
     const doneCount=items.filter(w=>w.done).length;
     const totalCount=items.length;
     const previewCount=5;
@@ -635,8 +647,8 @@ function renderWishList(){
     const displayItems=isExpanded?sorted:sorted.slice(0,previewCount);
 
     html+=`<div class="wish-card${isExpanded?' expanded':''}" data-cat="${cat}">
-      <div class="wc-header" onclick="expandCat('${esc(cat)}')">
-        <div class="wc-icon" style="background:${info.color}22;color:${info.color}">${info.icon}</div>
+      <div class="wc-header" onclick="expandCat('${esc(cat)}')" style="cursor:pointer">
+        <div class="wc-icon" style="background:${color}22;color:${color}">${icon}</div>
         <div class="wc-title">${cat}</div>
         <div class="wc-count">${doneCount}/${totalCount}</div>
       </div>
@@ -649,7 +661,7 @@ function renderWishList(){
     });
     html+='</div>';
     if(totalCount>previewCount||isExpanded){
-      html+=`<div class="wc-footer"><button class="wc-toggle" onclick="event.stopPropagation();${isExpanded?"collapseCat()":"expandCat('"+esc(cat)+"')"}"}">${isExpanded?'收起 ↑':'查看全部 ('+totalCount+'条) ↓'}</button></div>`;
+      html+=`<div class="wc-footer"><button class="wc-toggle" onclick="event.stopPropagation();expandCat('${esc(cat)}')">${isExpanded?'收起 ↑':'查看全部 ('+totalCount+'条) ↓'}</button></div>`;
     }
     html+='</div>';
   }
@@ -666,7 +678,7 @@ function getOrderedCats(activeCats){
   return ordered;
 }
 
-function expandCat(cat){expandedCat=cat;renderWishList();}
+function expandCat(cat){expandedCat=expandedCat===cat?null:cat;renderWishList();}
 function collapseCat(){expandedCat=null;renderWishList();}
 
 function esc(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;');}
@@ -751,16 +763,16 @@ function renderSettings(){
   document.getElementById('settingsMenu').innerHTML=`
     <div class="settings-item" onclick="openNameModal()"><div class="settings-icon">✏️</div><div class="settings-text">修改名字</div><div class="settings-arrow">›</div></div>
     <div class="settings-item" onclick="openReselect()"><div class="settings-icon">📋</div><div class="settings-text">重选心愿</div><div class="settings-arrow">›</div></div>
-    <div class="settings-item" onclick="resetApp()"><div class="settings-icon">🔄</div><div class="settings-text">重新自定义首页</div><div class="settings-arrow">›</div></div>
+    <div class="settings-item" onclick="resetAll()"><div class="settings-icon">🔄</div><div class="settings-text" style="color:#FF6B6B">重置（重新设置名字和心愿）</div><div class="settings-arrow">›</div></div>
     <div class="settings-item" onclick="exportData()"><div class="settings-icon">📤</div><div class="settings-text">导出数据</div><div class="settings-arrow">›</div></div>
-    <div class="settings-item" onclick="clearAllData()"><div class="settings-icon">🗑️</div><div class="settings-text" style="color:#FF6B6B">清空所有数据</div><div class="settings-arrow">›</div></div>`;
+    <div class="settings-item" onclick="importData()"><div class="settings-icon">📥</div><div class="settings-text">导入数据</div><div class="settings-arrow">›</div></div>`;
 }
 function openNameModal(){document.getElementById('newNameInput').value=appData.ownerName;document.getElementById('nameModal').classList.add('show');}
 function closeNameModal(){document.getElementById('nameModal').classList.remove('show');}
 function saveNewName(){const n=document.getElementById('newNameInput').value.trim();if(!n){showToast('请输入名字');return;}appData.ownerName=n;saveData();closeNameModal();renderHome();renderSettings();showToast('名字已更新');}
 function exportData(){const blob=new Blob([JSON.stringify(appData,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='心愿清单_'+appData.ownerName+'.json';a.click();showToast('导出成功');}
-function clearAllData(){if(!confirm('确定清空所有数据？此操作不可恢复！'))return;localStorage.removeItem('wishList_v10');appData=null;document.getElementById('bottomNav').style.display='none';showPage('pageOnboard1');document.getElementById('nameInput').value='';showToast('数据已清空');}
-function resetApp(){if(!confirm('重新自定义将回到初始选择页面，已选心愿和完成记录会保留'))return;appData.onboarded=false;saveData();document.getElementById('bottomNav').style.display='none';showPage('pageOnboard1');document.getElementById('nameInput').value=appData.ownerName;showToast('请重新设置');}
+function importData(){const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=function(){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=function(){try{const d=JSON.parse(r.result);if(d.ownerName&&d.wishes){appData=d;saveData();renderHome();renderSettings();showToast('导入成功 ✨');}else{showToast('文件格式不正确');}}catch(e){showToast('文件解析失败');}};r.readAsText(f);};inp.click();}
+function resetAll(){if(!confirm('重置将清除所有数据，重新开始设置名字和心愿，此操作不可恢复！'))return;localStorage.removeItem('wishList_v10');appData=null;document.getElementById('bottomNav').style.display='none';showPage('pageOnboard1');document.getElementById('nameInput').value='';showToast('已重置，请重新开始');}
 
 // ========== RE-SELECT ==========
 function openReselect(){showPage('pageReselect');renderRsCategoryList();}
@@ -782,24 +794,33 @@ function renderShare(){
   const el=document.getElementById('sharePreview');
   el.innerHTML=`
     <div class="share-canvas" id="shareCanvas">
-      <div class="s-name">${appData.ownerName}的心愿清单</div>
+      <div class="s-name">🌟 ${appData.ownerName}的心愿清单</div>
       <div class="s-stats">共 ${s.total} 个心愿 · 已实现 ${s.done} 个 · 完成率 ${s.pct}%</div>
       <div class="s-slogan">${slogan}</div>
       <div class="s-qr" id="shareQr"></div>
+      <div style="font-size:11px;opacity:.7;margin-top:8px">扫码开启你的心愿清单</div>
     </div>
     <div class="share-actions">
       <button class="share-btn primary" onclick="shareSaveImg()">保存图片</button>
     </div>`;
-  // Generate QR code
-  try{QRCode.toCanvas(document.createElement('canvas'),SHARE_URL,{width:100,margin:1},function(err,canvas){
-    if(!err){const qrEl=document.getElementById('shareQr');qrEl.innerHTML='';qrEl.appendChild(canvas);}
-  });}catch(e){console.log('QR gen error',e);}
+  // Generate QR code with larger size
+  setTimeout(function(){
+    try{
+      const qrContainer=document.getElementById('shareQr');
+      if(qrContainer){
+        const qrCanvas=document.createElement('canvas');
+        QRCode.toCanvas(qrCanvas,SHARE_URL,{width:120,margin:2,color:{dark:'#333',light:'#fff'}},function(err){
+          if(!err){qrContainer.innerHTML='';qrContainer.appendChild(qrCanvas);}
+        });
+      }
+    }catch(e){console.log('QR gen error',e);}
+  },100);
 }
 
 function shareSaveImg(){
   const target=document.getElementById('shareCanvas');
   if(typeof html2canvas!=='undefined'){
-    html2canvas(target,{backgroundColor:null,scale:2}).then(canvas=>{
+    html2canvas(target,{backgroundColor:null,scale:2,useCORS:true,allowTaint:true}).then(canvas=>{
       const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='心愿清单_'+appData.ownerName+'.png';a.click();showToast('图片已保存');
     }).catch(()=>showToast('保存失败'));
   }else{
