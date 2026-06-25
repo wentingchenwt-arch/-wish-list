@@ -348,6 +348,7 @@ const SHARE_URL='https://wentingchenwt-arch.github.io/-wish-list/';
 const SLOGANS=['快来围观XXX的人生心愿清单','开启你的心愿清单','人生不荒废，等你建心愿'];
 
 let appData=null,currentFilter='all',currentBigCat=null,addSelectedCat=null,editingWishKey=null,expandedCat=null;
+let openBigCats=new Set();
 
 function loadData(){const r=localStorage.getItem('wishList_v10');appData=r?JSON.parse(r):null;}
 function saveData(){localStorage.setItem('wishList_v10',JSON.stringify(appData));}
@@ -405,15 +406,16 @@ function buildCategoryListHTML(prefix){
     let totalWishes=0;for(let sc in smallCats)totalWishes+=smallCats[sc].length;
     const allSel=Object.keys(smallCats).every(sc=>appData.selectedSmallCats[sc]);
     const partial=!allSel&&Object.keys(smallCats).some(sc=>appData.selectedSmallCats[sc]);
+    const isOpen=openBigCats.has(bigCat);
     html+=`<div class="obig-cat fade-in" style="animation-delay:${idx*30}ms">
-      <div class="obig-head" onclick="toggleBigCatBody(this)">
-        <div class="cb ${allSel?'checked':partial?'partial':''}" onclick="event.stopPropagation();${prefix}ToggleBigCat('${bigCat}')"></div>
+      <div class="obig-head" onclick="toggleBigCat('${bigCat}','${prefix}')" style="cursor:pointer">
+        <div class="cb ${allSel?'checked':partial?'partial':''}"></div>
         <div class="obig-icon" style="background:${color}22;color:${color}">${icon}</div>
         <div class="obig-title">${bigCat}</div>
         <div class="obig-count">${Object.keys(smallCats).length}分类 · ${totalWishes}项</div>
-        <div class="obig-arrow">▾</div>
+        <div class="obig-arrow ${isOpen?'open':''}">▾</div>
       </div>
-      <div class="obig-body">`;
+      <div class="obig-body ${isOpen?'open':''}">`;
     for(let sc in smallCats){
       const isSel=appData.selectedSmallCats[sc];
       html+=`<div class="osmall">
@@ -440,13 +442,22 @@ function buildCategoryListHTML(prefix){
   return html;
 }
 
-function toggleBigCatBody(h){
-  const b=h.nextElementSibling,a=h.querySelector('.obig-arrow');
-  b.classList.toggle('open');a.classList.toggle('open',b.classList.contains('open'));
+function toggleBigCat(bigCat,prefix){
+  const sc=HIERARCHY[bigCat];
+  const allSelected=Object.keys(sc).every(s=>appData.selectedSmallCats[s]);
+  if(allSelected){
+    // 已选中 → 取消选中 + 收起
+    for(let s in sc){delete appData.selectedSmallCats[s];delete appData.wishes[s];}
+    openBigCats.delete(bigCat);
+  }else{
+    // 未选中 → 全选 + 展开（仅1个小分类时选完即收起）
+    for(let s in sc){appData.selectedSmallCats[s]=true;if(!appData.wishes[s])appData.wishes[s]=[...sc[s]];}
+    const smallCount=Object.keys(sc).length;
+    if(smallCount>1){openBigCats.add(bigCat);}else{openBigCats.delete(bigCat);}
+  }
+  saveData();
+  refreshCatList(prefix);
 }
-
-// Category toggle with auto-collapse for single small cat
-function obToggleBigCat(bigCat){toggleBigCatSelect(bigCat,'ob');}
 function obToggleSmallCat(bigCat,smallCat){toggleSmallCatSelect(bigCat,smallCat,'ob');}
 function obSelectAll(){selectAllCats('ob');}
 function obDeselectAll(){deselectAllCats('ob');}
@@ -470,7 +481,6 @@ function updateObInfo(){
 }
 
 // Re-select variants
-function rsToggleBigCat(bigCat){toggleBigCatSelect(bigCat,'rs');}
 function rsToggleSmallCat(bigCat,smallCat){toggleSmallCatSelect(bigCat,smallCat,'rs');}
 function rsSelectAll(){selectAllCats('rs');}
 function rsDeselectAll(){deselectAllCats('rs');}
@@ -490,12 +500,6 @@ function updateRsInfo(){
   const info=document.getElementById('rsInfo');if(info)info.textContent='已选 '+count+' 个分类';
 }
 
-function toggleBigCatSelect(bigCat,prefix){
-  const sc=HIERARCHY[bigCat];
-  const all=Object.keys(sc).every(s=>appData.selectedSmallCats[s]);
-  for(let s in sc){appData.selectedSmallCats[s]=!all;if(!all&&!appData.wishes[s])appData.wishes[s]=[...sc[s]];if(all)delete appData.wishes[s];}
-  refreshCatList(prefix);
-}
 function toggleSmallCatSelect(bigCat,smallCat,prefix){
   const isSel=appData.selectedSmallCats[smallCat];
   appData.selectedSmallCats[smallCat]=!isSel;
@@ -503,20 +507,11 @@ function toggleSmallCatSelect(bigCat,smallCat,prefix){
     if(bigCat!=='自定义'&&HIERARCHY[bigCat]&&HIERARCHY[bigCat][smallCat]){
       if(!appData.wishes[smallCat])appData.wishes[smallCat]=[...HIERARCHY[bigCat][smallCat]];
     }
+    openBigCats.add(bigCat);
   }else{delete appData.wishes[smallCat];}
-  saveData();
-  // Auto-collapse if only 1 small cat in this bigCat
   const smallCount=(bigCat!=='自定义'&&HIERARCHY[bigCat])?Object.keys(HIERARCHY[bigCat]).length:1;
-  if(smallCount===1){
-    // Close the big cat section
-    const obigEl=event&&event.target?event.target.closest('.obig-cat'):null;
-    if(obigEl){
-      const body=obigEl.querySelector('.obig-body');
-      const arrow=obigEl.querySelector('.obig-arrow');
-      if(body)body.classList.remove('open');
-      if(arrow)arrow.classList.remove('open');
-    }
-  }
+  if(smallCount===1){openBigCats.delete(bigCat);}
+  saveData();
   if(prefix==='ob'){updateObSelectAll();updateObInfo();}
   else{updateRsSelectAll();updateRsInfo();}
   refreshCatList(prefix);
