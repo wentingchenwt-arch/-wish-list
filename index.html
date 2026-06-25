@@ -98,7 +98,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .wc-footer{padding:6px 14px 10px;text-align:center}
 .wc-toggle{font-size:11px;color:var(--primary);background:none;border:none;cursor:pointer;font-weight:500}
 
-.wish-card.expanded{column-span:all;margin-bottom:16px}
+.wish-card.expanded{margin-bottom:16px}
 .wish-card.expanded .wc-body{padding:4px 14px 6px}
 .wish-card.expanded .wc-item{padding:10px 4px}
 .wish-card.expanded .wc-text{font-size:14px}
@@ -350,6 +350,53 @@ const SLOGANS=['快来围观XXX的人生心愿清单','开启你的心愿清单'
 let appData=null,currentFilter='all',currentBigCat=null,addSelectedCat=null,editingWishKey=null,expandedCat=null;
 let openBigCats=new Set();
 
+// Direct DOM update helpers (no re-render)
+function updateSmallCatUI(prefix,smallCat,isSel){
+  const list=document.getElementById(prefix+'CategoryList');if(!list)return;
+  const items=list.querySelectorAll('.osmall');
+  for(const item of items){
+    const nameEl=item.querySelector('.osmall-name');
+    if(nameEl&&nameEl.textContent===smallCat){
+      const cb=item.querySelector('.cb');
+      cb.className='cb'+(isSel?' checked':'');
+      break;
+    }
+  }
+}
+function updateBigCatUI(prefix,bigCat){
+  const list=document.getElementById(prefix+'CategoryList');if(!list)return;
+  const heads=list.querySelectorAll('.obig-head');
+  for(const head of heads){
+    const titleEl=head.querySelector('.obig-title');
+    if(titleEl&&titleEl.textContent===bigCat){
+      const sc=HIERARCHY[bigCat];
+      const allSel=Object.keys(sc).every(s=>appData.selectedSmallCats[s]);
+      const partial=!allSel&&Object.keys(sc).some(sc2=>appData.selectedSmallCats[sc2]);
+      const cb=head.querySelector('.cb');
+      cb.className='cb'+(allSel?' checked':partial?' partial':'');
+      const arrow=head.querySelector('.obig-arrow');
+      const body=head.nextElementSibling;
+      const isOpen=openBigCats.has(bigCat);
+      if(arrow)arrow.className='obig-arrow'+(isOpen?' open':'');
+      if(body)body.className='obig-body'+(isOpen?' open':'');
+      break;
+    }
+  }
+}
+function updateSelectAllUI(prefix){
+  const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
+  const allSel=all.length>0&&all.every(s=>appData.selectedSmallCats[s]);
+  const some=all.some(s=>appData.selectedSmallCats[s]);
+  const cb=document.getElementById(prefix+'SelectAllCb');
+  if(cb)cb.className='cb'+(allSel?' checked':some?' partial':'');
+}
+function updateInfoUI(prefix){
+  let count=0;for(let s in appData.selectedSmallCats)if(appData.selectedSmallCats[s])count++;
+  const info=document.getElementById(prefix==='ob'?'step2Info':'rsInfo');
+  if(info)info.textContent='已选 '+count+' 个分类';
+  if(prefix==='ob'){const btn=document.getElementById('step2NextBtn');if(btn)btn.disabled=count===0;}
+}
+
 function loadData(){const r=localStorage.getItem('wishList_v10');appData=r?JSON.parse(r):null;}
 function saveData(){localStorage.setItem('wishList_v10',JSON.stringify(appData));}
 function isNewUser(){return !appData||!appData.onboarded;}
@@ -446,17 +493,21 @@ function toggleBigCat(bigCat,prefix){
   const sc=HIERARCHY[bigCat];
   const allSelected=Object.keys(sc).every(s=>appData.selectedSmallCats[s]);
   if(allSelected){
-    // 已选中 → 取消选中 + 收起
+    // 已全选 → 取消选中 + 收起
     for(let s in sc){delete appData.selectedSmallCats[s];delete appData.wishes[s];}
     openBigCats.delete(bigCat);
   }else{
-    // 未选中 → 全选 + 展开（仅1个小分类时选完即收起）
+    // 未全选 → 全选 + 展开（仅1个小分类时选完自动收起）
     for(let s in sc){appData.selectedSmallCats[s]=true;if(!appData.wishes[s])appData.wishes[s]=[...sc[s]];}
     const smallCount=Object.keys(sc).length;
     if(smallCount>1){openBigCats.add(bigCat);}else{openBigCats.delete(bigCat);}
   }
-  saveData();
-  refreshCatList(prefix);
+  // 只更新DOM视觉状态，不重新渲染整个列表
+  updateBigCatUI(prefix,bigCat);
+  // 更新小分类checkbox状态
+  for(let s in sc){updateSmallCatUI(prefix,s,!!appData.selectedSmallCats[s]);}
+  updateSelectAllUI(prefix);
+  updateInfoUI(prefix);
 }
 function obToggleSmallCat(bigCat,smallCat){toggleSmallCatSelect(bigCat,smallCat,'ob');}
 function obSelectAll(){selectAllCats('ob');}
@@ -511,16 +562,30 @@ function toggleSmallCatSelect(bigCat,smallCat,prefix){
   }else{delete appData.wishes[smallCat];}
   const smallCount=(bigCat!=='自定义'&&HIERARCHY[bigCat])?Object.keys(HIERARCHY[bigCat]).length:1;
   if(smallCount===1){openBigCats.delete(bigCat);}
-  saveData();
-  if(prefix==='ob'){updateObSelectAll();updateObInfo();}
-  else{updateRsSelectAll();updateRsInfo();}
-  refreshCatList(prefix);
+  // 只更新DOM视觉状态，不重新渲染
+  updateSmallCatUI(prefix,smallCat,!!appData.selectedSmallCats[smallCat]);
+  updateBigCatUI(prefix,bigCat);
+  updateSelectAllUI(prefix);
+  updateInfoUI(prefix);
 }
 function selectAllCats(prefix){
   for(let b in HIERARCHY)for(let s in HIERARCHY[b]){appData.selectedSmallCats[s]=true;if(!appData.wishes[s])appData.wishes[s]=[...HIERARCHY[b][s]];}
-  refreshCatList(prefix);
+  // 只更新DOM视觉状态
+  const list=document.getElementById(prefix+'CategoryList');if(!list)return;
+  list.querySelectorAll('.cb').forEach(cb=>{cb.className='cb checked';});
+  updateSelectAllUI(prefix);updateInfoUI(prefix);
 }
-function deselectAllCats(prefix){appData.selectedSmallCats={};appData.wishes={};refreshCatList(prefix);}
+function deselectAllCats(prefix){
+  appData.selectedSmallCats={};appData.wishes={};
+  // 只更新DOM视觉状态
+  const list=document.getElementById(prefix+'CategoryList');if(!list)return;
+  list.querySelectorAll('.cb').forEach(cb=>{cb.className='cb';});
+  // 收起所有展开的大分类
+  list.querySelectorAll('.obig-body').forEach(b=>{b.className='obig-body';});
+  list.querySelectorAll('.obig-arrow').forEach(a=>{a.className='obig-arrow';});
+  openBigCats.clear();
+  updateSelectAllUI(prefix);updateInfoUI(prefix);
+}
 function refreshCatList(prefix){
   if(prefix==='ob')renderObCategoryList();
   else renderRsCategoryList();
@@ -798,33 +863,39 @@ function renderShare(){
     <div class="share-actions">
       <button class="share-btn primary" onclick="shareSaveImg()">保存图片</button>
     </div>`;
-  // Generate QR code with larger size
+  // Generate QR code using toDataURL for better html2canvas compatibility
   setTimeout(function(){
     try{
       const qrContainer=document.getElementById('shareQr');
-      if(qrContainer){
-        const qrCanvas=document.createElement('canvas');
-        QRCode.toCanvas(qrCanvas,SHARE_URL,{width:120,margin:2,color:{dark:'#333',light:'#fff'}},function(err){
-          if(!err){qrContainer.innerHTML='';qrContainer.appendChild(qrCanvas);}
+      if(qrContainer&&typeof QRCode!=='undefined'){
+        QRCode.toDataURL(SHARE_URL,{width:240,margin:2,color:{dark:'#333',light:'#fff'}},function(err,url){
+          if(!err&&url){
+            qrContainer.innerHTML='<img src="'+url+'" style="width:120px;height:120px;display:block" crossorigin="anonymous">';
+          }
         });
       }
     }catch(e){console.log('QR gen error',e);}
-  },100);
+  },150);
 }
 
 function shareSaveImg(){
   const target=document.getElementById('shareCanvas');
-  if(typeof html2canvas!=='undefined'){
-    html2canvas(target,{backgroundColor:null,scale:2,useCORS:true,allowTaint:true}).then(canvas=>{
-      const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='心愿清单_'+appData.ownerName+'.png';a.click();showToast('图片已保存');
-    }).catch(()=>showToast('保存失败'));
-  }else{
+  if(typeof html2canvas==='undefined'){
     const script=document.createElement('script');
     script.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-    script.onload=()=>shareSaveImg();
+    script.onload=()=>setTimeout(()=>shareSaveImg(),300);
     script.onerror=()=>showToast('加载截图库失败');
     document.head.appendChild(script);
+    return;
   }
+  // Wait for QR code to be fully rendered
+  const qrReady=target.querySelector('.s-qr img')||target.querySelector('.s-qr canvas');
+  const doCapture=()=>{
+    html2canvas(target,{backgroundColor:null,scale:2,useCORS:true,allowTaint:true}).then(canvas=>{
+      const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='心愿清单_'+appData.ownerName+'.png';a.click();showToast('图片已保存');
+    }).catch(e=>{console.log('capture error',e);showToast('保存失败');});
+  };
+  if(qrReady){doCapture();}else{setTimeout(doCapture,500);}
 }
 
 // ========== UTILS ==========
