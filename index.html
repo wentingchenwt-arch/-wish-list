@@ -47,10 +47,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .obig-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
 .obig-title{font-size:14px;font-weight:600;flex:1}
 .obig-count{font-size:11px;color:var(--text2);margin-right:4px}
-.obig-arrow{font-size:11px;color:var(--text3);transition:transform .2s}
-.obig-arrow.open{transform:rotate(180deg)}
-.obig-body{padding:0 14px 8px;display:none}
-.obig-body.open{display:block}
+.obig-body{padding:0 14px 8px;display:block}
 .osmall{display:flex;align-items:center;padding:8px 10px;margin-bottom:4px;background:var(--bg);border-radius:8px;gap:8px}
 .osmall-name{font-size:13px;flex:1}
 .osmall-count{font-size:11px;color:var(--text2)}
@@ -138,14 +135,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .settings-arrow{color:var(--text3);font-size:12px}
 
 /* SHARE */
-.share-preview{margin:16px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);text-align:center}
-.share-canvas{width:100%;max-width:375px;margin:0 auto;aspect-ratio:9/16;background:linear-gradient(135deg,#FF6B6B,#FF8E8E);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:40px 24px;position:relative;border-radius:var(--radius)}
-.share-canvas .s-name{font-size:26px;font-weight:700;margin-bottom:8px}
-.share-canvas .s-stats{font-size:15px;opacity:.85;margin-bottom:20px}
-.share-canvas .s-slogan{font-size:14px;opacity:.85;margin-bottom:24px;line-height:1.5}
-.share-canvas .s-qr{background:#fff;padding:10px;border-radius:10px;display:inline-block}
+#pageShare.active{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:auto;padding-top:60px}
+.share-wrap{width:100%;max-width:340px;margin:0 auto}
+.share-canvas{width:100%;background:linear-gradient(135deg,#FF6B6B,#FF8E8E);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:24px 16px;border-radius:var(--radius) var(--radius) 0 0}
+.share-canvas .s-name{font-size:20px;font-weight:700;margin-bottom:4px}
+.share-canvas .s-stats{font-size:12px;opacity:.85;margin-bottom:10px}
+.share-canvas .s-slogan{font-size:12px;opacity:.85;margin-bottom:12px;line-height:1.4}
+.share-canvas .s-qr{background:#fff;padding:6px;border-radius:6px;display:inline-block}
 .share-canvas .s-qr canvas{display:block}
-.share-actions{padding:16px;display:flex;gap:10px}
+.share-actions{padding:10px 16px 16px;display:flex;gap:10px;background:var(--card);border-radius:0 0 var(--radius) var(--radius)}
 .share-btn{flex:1;padding:12px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
 .share-btn.primary{background:linear-gradient(135deg,var(--primary),#FF8E8E);color:#fff}
 
@@ -258,7 +256,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 <!-- SHARE -->
 <div class="page" id="pageShare">
   <div class="topbar"><h1>📤 分享</h1></div>
-  <div class="share-preview" id="sharePreview"></div>
+  <div class="share-wrap" id="sharePreview"></div>
 </div>
 
 <!-- RE-SELECT -->
@@ -348,8 +346,6 @@ const SHARE_URL='https://wentingchenwt-arch.github.io/-wish-list/';
 const SLOGANS=['快来围观XXX的人生心愿清单','开启你的心愿清单','人生不荒废，等你建心愿'];
 
 let appData=null,currentFilter='all',currentBigCat=null,addSelectedCat=null,editingWishKey=null,expandedCat=null;
-let openBigCats=new Set();
-
 // Direct DOM update helpers (no re-render)
 function updateSmallCatUI(prefix,smallCat,isSel){
   const list=document.getElementById(prefix+'CategoryList');if(!list)return;
@@ -363,7 +359,8 @@ function updateSmallCatUI(prefix,smallCat,isSel){
     }
   }
 }
-function updateBigCatUI(prefix,bigCat){
+function updateBigCatCheckbox(prefix,bigCat){
+  if(!prefix)return;
   const list=document.getElementById(prefix+'CategoryList');if(!list)return;
   const heads=list.querySelectorAll('.obig-head');
   for(const head of heads){
@@ -374,11 +371,6 @@ function updateBigCatUI(prefix,bigCat){
       const partial=!allSel&&Object.keys(sc).some(sc2=>appData.selectedSmallCats[sc2]);
       const cb=head.querySelector('.cb');
       cb.className='cb'+(allSel?' checked':partial?' partial':'');
-      const arrow=head.querySelector('.obig-arrow');
-      const body=head.nextElementSibling;
-      const isOpen=openBigCats.has(bigCat);
-      if(arrow)arrow.className='obig-arrow'+(isOpen?' open':'');
-      if(body)body.className='obig-body'+(isOpen?' open':'');
       break;
     }
   }
@@ -453,16 +445,14 @@ function buildCategoryListHTML(prefix){
     let totalWishes=0;for(let sc in smallCats)totalWishes+=smallCats[sc].length;
     const allSel=Object.keys(smallCats).every(sc=>appData.selectedSmallCats[sc]);
     const partial=!allSel&&Object.keys(smallCats).some(sc=>appData.selectedSmallCats[sc]);
-    const isOpen=openBigCats.has(bigCat);
     html+=`<div class="obig-cat fade-in" style="animation-delay:${idx*30}ms">
-      <div class="obig-head" onclick="toggleBigCat('${bigCat}','${prefix}')" style="cursor:pointer">
-        <div class="cb ${allSel?'checked':partial?'partial':''}"></div>
+      <div class="obig-head">
+        <div class="cb ${allSel?'checked':partial?'partial':''}" onclick="event.stopPropagation();toggleBigCat('${bigCat}','${prefix}')"></div>
         <div class="obig-icon" style="background:${color}22;color:${color}">${icon}</div>
         <div class="obig-title">${bigCat}</div>
         <div class="obig-count">${Object.keys(smallCats).length}分类 · ${totalWishes}项</div>
-        <div class="obig-arrow ${isOpen?'open':''}">▾</div>
       </div>
-      <div class="obig-body ${isOpen?'open':''}">`;
+      <div class="obig-body">`;
     for(let sc in smallCats){
       const isSel=appData.selectedSmallCats[sc];
       html+=`<div class="osmall">
@@ -493,18 +483,12 @@ function toggleBigCat(bigCat,prefix){
   const sc=HIERARCHY[bigCat];
   const allSelected=Object.keys(sc).every(s=>appData.selectedSmallCats[s]);
   if(allSelected){
-    // 已全选 → 取消选中 + 收起
     for(let s in sc){delete appData.selectedSmallCats[s];delete appData.wishes[s];}
-    openBigCats.delete(bigCat);
   }else{
-    // 未全选 → 全选 + 展开（仅1个小分类时选完自动收起）
     for(let s in sc){appData.selectedSmallCats[s]=true;if(!appData.wishes[s])appData.wishes[s]=[...sc[s]];}
-    const smallCount=Object.keys(sc).length;
-    if(smallCount>1){openBigCats.add(bigCat);}else{openBigCats.delete(bigCat);}
   }
-  // 只更新DOM视觉状态，不重新渲染整个列表
-  updateBigCatUI(prefix,bigCat);
-  // 更新小分类checkbox状态
+  // 只更新DOM视觉状态
+  if(prefix)updateBigCatCheckbox(prefix,bigCat);
   for(let s in sc){updateSmallCatUI(prefix,s,!!appData.selectedSmallCats[s]);}
   updateSelectAllUI(prefix);
   updateInfoUI(prefix);
@@ -514,7 +498,8 @@ function obSelectAll(){selectAllCats('ob');}
 function obDeselectAll(){deselectAllCats('ob');}
 function obToggleSelectAll(){
   const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
-  all.every(s=>appData.selectedSmallCats[s])?obDeselectAll():obSelectAll();
+  if(all.length>0&&all.every(s=>appData.selectedSmallCats[s])){obDeselectAll();}
+  else{obSelectAll();}
 }
 function updateObSelectAll(){
   const cb=document.getElementById('obSelectAllCb');if(!cb)return;
@@ -537,7 +522,8 @@ function rsSelectAll(){selectAllCats('rs');}
 function rsDeselectAll(){deselectAllCats('rs');}
 function rsToggleSelectAll(){
   const all=[];for(let b in HIERARCHY)for(let s in HIERARCHY[b])all.push(s);
-  all.every(s=>appData.selectedSmallCats[s])?rsDeselectAll():rsSelectAll();
+  if(all.length>0&&all.every(s=>appData.selectedSmallCats[s])){rsDeselectAll();}
+  else{rsSelectAll();}
 }
 function updateRsSelectAll(){
   const cb=document.getElementById('rsSelectAllCb');if(!cb)return;
@@ -558,13 +544,10 @@ function toggleSmallCatSelect(bigCat,smallCat,prefix){
     if(bigCat!=='自定义'&&HIERARCHY[bigCat]&&HIERARCHY[bigCat][smallCat]){
       if(!appData.wishes[smallCat])appData.wishes[smallCat]=[...HIERARCHY[bigCat][smallCat]];
     }
-    openBigCats.add(bigCat);
   }else{delete appData.wishes[smallCat];}
-  const smallCount=(bigCat!=='自定义'&&HIERARCHY[bigCat])?Object.keys(HIERARCHY[bigCat]).length:1;
-  if(smallCount===1){openBigCats.delete(bigCat);}
-  // 只更新DOM视觉状态，不重新渲染
+  // 只更新DOM视觉状态
   updateSmallCatUI(prefix,smallCat,!!appData.selectedSmallCats[smallCat]);
-  updateBigCatUI(prefix,bigCat);
+  if(prefix)updateBigCatCheckbox(prefix,bigCat);
   updateSelectAllUI(prefix);
   updateInfoUI(prefix);
 }
@@ -577,13 +560,8 @@ function selectAllCats(prefix){
 }
 function deselectAllCats(prefix){
   appData.selectedSmallCats={};appData.wishes={};
-  // 只更新DOM视觉状态
   const list=document.getElementById(prefix+'CategoryList');if(!list)return;
   list.querySelectorAll('.cb').forEach(cb=>{cb.className='cb';});
-  // 收起所有展开的大分类
-  list.querySelectorAll('.obig-body').forEach(b=>{b.className='obig-body';});
-  list.querySelectorAll('.obig-arrow').forEach(a=>{a.className='obig-arrow';});
-  openBigCats.clear();
   updateSelectAllUI(prefix);updateInfoUI(prefix);
 }
 function refreshCatList(prefix){
@@ -857,25 +835,21 @@ function renderShare(){
       <div class="s-name">🌟 ${appData.ownerName}的心愿清单</div>
       <div class="s-stats">共 ${s.total} 个心愿 · 已实现 ${s.done} 个 · 完成率 ${s.pct}%</div>
       <div class="s-slogan">${slogan}</div>
-      <div class="s-qr" id="shareQr"></div>
-      <div style="font-size:11px;opacity:.7;margin-top:8px">扫码开启你的心愿清单</div>
+      <div class="s-qr"><canvas id="qrCanvas" width="100" height="100"></canvas></div>
+      <div style="font-size:10px;opacity:.7;margin-top:6px">扫码开启你的心愿清单</div>
     </div>
     <div class="share-actions">
       <button class="share-btn primary" onclick="shareSaveImg()">保存图片</button>
     </div>`;
-  // Generate QR code using toDataURL for better html2canvas compatibility
-  setTimeout(function(){
-    try{
-      const qrContainer=document.getElementById('shareQr');
-      if(qrContainer&&typeof QRCode!=='undefined'){
-        QRCode.toDataURL(SHARE_URL,{width:240,margin:2,color:{dark:'#333',light:'#fff'}},function(err,url){
-          if(!err&&url){
-            qrContainer.innerHTML='<img src="'+url+'" style="width:120px;height:120px;display:block" crossorigin="anonymous">';
-          }
-        });
-      }
-    }catch(e){console.log('QR gen error',e);}
-  },150);
+  // Generate QR code directly onto canvas (most reliable for html2canvas)
+  try{
+    const qrCanvas=document.getElementById('qrCanvas');
+    if(qrCanvas&&typeof QRCode!=='undefined'&&QRCode.toCanvas){
+      QRCode.toCanvas(qrCanvas,SHARE_URL,{width:100,margin:2,color:{dark:'#333',light:'#fff'}},function(err){
+        if(err)console.log('QR error:',err);
+      });
+    }
+  }catch(e){console.log('QR gen error',e);}
 }
 
 function shareSaveImg(){
@@ -888,14 +862,9 @@ function shareSaveImg(){
     document.head.appendChild(script);
     return;
   }
-  // Wait for QR code to be fully rendered
-  const qrReady=target.querySelector('.s-qr img')||target.querySelector('.s-qr canvas');
-  const doCapture=()=>{
-    html2canvas(target,{backgroundColor:null,scale:2,useCORS:true,allowTaint:true}).then(canvas=>{
-      const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='心愿清单_'+appData.ownerName+'.png';a.click();showToast('图片已保存');
-    }).catch(e=>{console.log('capture error',e);showToast('保存失败');});
-  };
-  if(qrReady){doCapture();}else{setTimeout(doCapture,500);}
+  html2canvas(target,{backgroundColor:null,scale:2,useCORS:true,allowTaint:true}).then(canvas=>{
+    const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='心愿清单_'+appData.ownerName+'.png';a.click();showToast('图片已保存');
+  }).catch(e=>{console.log('capture error',e);showToast('保存失败');});
 }
 
 // ========== UTILS ==========
